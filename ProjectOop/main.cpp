@@ -12,6 +12,7 @@
 #include "EnemyFactory.h"
 #include "Snowball.h"
 #include "Knife.h"
+#include "ArtilleryProjectile.h"
 #include "levelCompleteUI.h"
 #include "HUD.h"
 #include "BossDefeatedUI.h"
@@ -47,7 +48,16 @@ int main(){
     Projectile* active_projectiles[max_projectiles];
     int projectile_count = 0;
     int enemy_count = 0;
+    float p1DamageCooldown = 0.0f;
+    float p2DamageCooldown = 0.0f;
+    for (int i = 0; i < max_enemies; i++) {
+        active_enemies[i] = nullptr;
+    }
+    for (int i = 0; i < max_projectiles; i++) {
+        active_projectiles[i] = nullptr;
+    }
     Assets::loadAll();
+    hud.setup();
     loginScreen.setup();
     main_menu.setup();
     levelCompleteScreen.setup();
@@ -112,6 +122,12 @@ int main(){
     while (window.isOpen()){
         window.clear(Color::Black);
         float deltaTime = time.restart().asSeconds();
+        if (p1DamageCooldown > 0.0f) {
+            p1DamageCooldown -= deltaTime;
+        }
+        if (p2DamageCooldown > 0.0f) {
+            p2DamageCooldown -= deltaTime;
+        }
         //plays animation at 1fps of the start screen
         if (manager.get_start_screen()) {
             start_timer += deltaTime;
@@ -337,15 +353,45 @@ int main(){
                         active_enemies[i]->hasSpawnRequest = false;
                     }
 
+                    if (active_enemies[i]->hasProjectileRequest && projectile_count < max_projectiles) {
+                        if (active_enemies[i]->projectileType == "Knife") {
+                            float targetX = p1.get_x();
+                            float targetY = p1.get_y();
+                            float p1Dist = p1.get_x() - active_enemies[i]->getx();
+                            float p2Dist = p2.get_x() - active_enemies[i]->getx();
+                            if (p1Dist < 0.0f) p1Dist = -p1Dist;
+                            if (p2Dist < 0.0f) p2Dist = -p2Dist;
+                            if (p2Dist < p1Dist) {
+                                targetX = p2.get_x();
+                                targetY = p2.get_y();
+                            }
+                            active_projectiles[projectile_count++] = new Knife(active_enemies[i]->pX, active_enemies[i]->pY, targetX, targetY);
+                        }
+                        else if (active_enemies[i]->projectileType == "Artillery") {
+                            active_projectiles[projectile_count++] = new ArtilleryProjectile(active_enemies[i]->pX, active_enemies[i]->pY, active_enemies[i]->pVx, active_enemies[i]->pVy);
+                        }
+                        active_enemies[i]->hasProjectileRequest = false;
+                    }
+
                     //Kicking logic
                     if (active_enemies[i]->get_encased() && !active_enemies[i]->get_rolling()) {
                         if (p1.get_hitbox().intersects(active_enemies[i]->getHitbox())) {
                             float kickDir = (p1.get_x() < active_enemies[i]->getx()) ? 400.0f : -400.0f;
-                            active_enemies[i]->start_rolling(kickDir);
+                            active_enemies[i]->start_rolling(kickDir, 1);
                         }
                         if (p2.get_hitbox().intersects(active_enemies[i]->getHitbox())) {
                             float kickDir = (p2.get_x() < active_enemies[i]->getx()) ? 400.0f : -400.0f;
-                            active_enemies[i]->start_rolling(kickDir);
+                            active_enemies[i]->start_rolling(kickDir, 2);
+                        }
+                    }
+                    else if (!active_enemies[i]->get_rolling()) {
+                        if (p1DamageCooldown <= 0.0f && p1.get_hitbox().intersects(active_enemies[i]->getHitbox())) {
+                            p1.takeDamage();
+                            p1DamageCooldown = 1.0f;
+                        }
+                        if (p2DamageCooldown <= 0.0f && p2.get_hitbox().intersects(active_enemies[i]->getHitbox())) {
+                            p2.takeDamage();
+                            p2DamageCooldown = 1.0f;
                         }
                     }
                     //removal
@@ -363,15 +409,30 @@ int main(){
             for (int i = 0; i < projectile_count; i++) {
                 if (active_projectiles[i] != nullptr) {//check if projectile exists
                     active_projectiles[i]->update(deltaTime);
-                    //Check for collisions with enemies
-                    for (int j = 0; j < enemy_count; j++) {
-                        if (active_enemies[j] != nullptr) {
-                            FloatRect ballHitbox = active_projectiles[i]->getHitbox();
-                            FloatRect enemyHitbox = active_enemies[j]->getHitbox();
-                            if (ballHitbox.intersects(enemyHitbox)) {
-                                active_enemies[j]->hit();
-                                active_projectiles[i]->setisactive(false);
-                                break;
+                    if (dynamic_cast<Knife*>(active_projectiles[i]) != nullptr || dynamic_cast<ArtilleryProjectile*>(active_projectiles[i]) != nullptr) {
+                        FloatRect projectileHitbox = active_projectiles[i]->getHitbox();
+                        if (p1DamageCooldown <= 0.0f && projectileHitbox.intersects(p1.get_hitbox())) {
+                            p1.takeDamage();
+                            p1DamageCooldown = 1.0f;
+                            active_projectiles[i]->setisactive(false);
+                        }
+                        if (p2DamageCooldown <= 0.0f && projectileHitbox.intersects(p2.get_hitbox())) {
+                            p2.takeDamage();
+                            p2DamageCooldown = 1.0f;
+                            active_projectiles[i]->setisactive(false);
+                        }
+                    }
+                    else {
+                        //Check for collisions with enemies
+                        for (int j = 0; j < enemy_count; j++) {
+                            if (active_enemies[j] != nullptr) {
+                                FloatRect ballHitbox = active_projectiles[i]->getHitbox();
+                                FloatRect enemyHitbox = active_enemies[j]->getHitbox();
+                                if (ballHitbox.intersects(enemyHitbox)) {
+                                    active_enemies[j]->hit();
+                                    active_projectiles[i]->setisactive(false);
+                                    break;
+                                }
                             }
                         }
                     }
@@ -396,6 +457,17 @@ int main(){
                         }
                         FloatRect Hitbox_target = active_enemies[j]->getHitbox();
                         if (Hitbox_SnowBall.intersects(Hitbox_target)) {
+                            int owner = active_enemies[i]->get_rolling_owner();
+                            int enemyType = active_enemies[j]->get_enemy_type();
+                            int gems = active_enemies[j]->get_gemdrop();
+                            if (owner == 1) {
+                                p1.enemykilled(enemyType);
+                                p1.pickGem(gems);
+                            }
+                            else if (owner == 2) {
+                                p2.enemykilled(enemyType);
+                                p2.pickGem(gems);
+                            }
                             active_enemies[j]->kill();
                             active_enemies[i]->grow_rolling();
                         }

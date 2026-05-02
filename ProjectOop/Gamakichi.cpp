@@ -11,13 +11,14 @@ Gamakichi::Gamakichi(float startX, float startY)
     projectileCount = 3;
     armActive = true;
     right = true;
+    enemyType = 5;
 }
 
 void Gamakichi::update(float deltaTime) {
     attackTimer += deltaTime;
     //gravity
     bool was_grounded = on_ground;
-    applyGravity(deltaTime, 400.0f);
+    applyGravity(deltaTime, 450.0f);
     //jump on landing
     if (!was_grounded && on_ground) {
         vy = -200.0f;
@@ -107,4 +108,36 @@ void Gamakichi::fireArtillery() {
     //Fires randomly either left or right arc
     pVy = -400.0f; //shoots up
     pVx = (rand() % 2 == 0) ? 200.0f : -200.0f;
+}
+
+float Gamakichi::get_attack_timer() const {
+    return attackTimer;
+}
+
+float Gamakichi::get_attack_duration() const {
+    return attackDuration;
+}
+
+int Gamakichi::get_projectile_count() const {
+    return projectileCount;
+}
+
+bool Gamakichi::get_arm_active() const {
+    return armActive;
+}
+
+void Gamakichi::set_attack_timer(float new_attack_timer) {
+    attackTimer = new_attack_timer;
+}
+
+void Gamakichi::set_attack_duration(float new_attack_duration) {
+    attackDuration = new_attack_duration;
+}
+
+void Gamakichi::set_projectile_count(int new_projectile_count) {
+    projectileCount = new_projectile_count;
+}
+
+void Gamakichi::set_arm_active(bool new_arm_active) {
+    armActive = new_arm_active;
 }

@@ -12,6 +12,8 @@ public:
     static Texture run[4];
     static Texture jump[6];
     static Texture walk[4];
+    static Texture death[4];
+    static Texture push[4];
     static Texture idle;
     static Texture fall[1];
     //UI screen assets
@@ -24,6 +26,10 @@ public:
     static Texture botom_t;
     static Texture flyng_t;
     static Texture tornado_t;
+    static Texture flyng_anim[4];
+    static Texture tornado_anim[4];
+    static Texture knife_t;
+    static Texture snow_attack_t;
     static Texture mogera_t;
     static Texture gamakichi_t;
     //Font

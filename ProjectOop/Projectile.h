@@ -1,11 +1,15 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-
+using namespace sf;
+using namespace std;
 class Projectile {
 protected:
     float x, y;
     float speedX, speedY;
     bool isactive;
+    Sprite sprite;
+    Texture texture;
+    FloatRect hitbox;
 
 public:
     virtual void update(float deltaTime) = 0;

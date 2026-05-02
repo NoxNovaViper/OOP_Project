@@ -134,7 +134,6 @@ void Level_Manager::next_level() {
 		}
 
 		//play transition jump animation sound etc
-
 		s.transition = false;//Transitioning to next level
 		s.play = true;//player movement allowed
 	}

@@ -8,34 +8,33 @@ Botom::Botom(float startX, float startY) {
     movingRight = true;
     isencased = false;
     gemdrop = 10;
+    enemyType = 1;
 }
 
 void Botom::update(float deltaTime) {
     if (Rolling) {
         x += Roll_speed * deltaTime;
-        //When snowball, so rolling
-        if (x < 0) {
-            x = 800;
-        }
-        if (x > 800) {
-            x = 0;
+        if ((x <= 0) || (x + getHitbox().width >= 800)) {
+            kill();
         }
         return;//no normal logic for rolling
     }
-
     if (update_snow_state(deltaTime)) {
         return;
     }
-
     float currentSpeed = speed * snow_speed_multiplier();
     if (!isencased) {
         //movement back
         if (movingRight) {
             x += currentSpeed * deltaTime;
-            if (x > 750) movingRight = false;
+            if (x > 750) {
+                movingRight = false;
+            }
         } else {
             x -= currentSpeed * deltaTime;
-            if (x < 10) movingRight = true;
+            if (x < 10) {
+                movingRight = true;
+            }
         }
     }
 
@@ -43,16 +42,24 @@ void Botom::update(float deltaTime) {
     applyGravity(deltaTime);
 }
 void Botom::draw(sf::RenderWindow& window) {
-    sf::Sprite enemySprite;
+    Sprite enemySprite;
     enemySprite.setTexture(Assets::botom_t);
     int frameSize = Assets::botom_t.getSize().y;
     enemySprite.setTextureRect(sf::IntRect(0, 0, frameSize, frameSize));
     enemySprite.setPosition(x, y);
-    //scaled
-    enemySprite.setScale(48.0f / frameSize, 48.0f / frameSize);
+
+    enemySprite.setScale(60.0f / frameSize, 60.0f / frameSize);
     window.draw(enemySprite);
-    drawSnowOverlay(window, 48.0f, 48.0f);
+    drawSnowOverlay(window, 60.0f, 60.0f);
 }
 void Botom::hit() {
-    add_snow(25);
+    add_snow(50);
+}
+
+bool Botom::get_moving_right() const {
+    return movingRight;
+}
+
+void Botom::set_moving_right(bool r) {
+    movingRight = r;
 }

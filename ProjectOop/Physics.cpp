@@ -1,9 +1,12 @@
 #include "Physics.h"
+#include "AssetLoader.h"
 int snow::count = 0;
 
 void snow::update(float time) {
 	float move = dx * time * dir;
 	x += move;
+	dy += 450.0f * time;
+	y += dy * time;
 	distanceTraveled += std::abs(move);
 
 	if (x < 0) {
@@ -13,6 +16,9 @@ void snow::update(float time) {
 		x = 0;
 	}
 	if (distanceTraveled >= maxDistance) {
+		isactive = false;
+	}
+	if (y > Ground) {
 		isactive = false;
 	}
 }
@@ -27,7 +33,7 @@ snow::snow(Player& p) {
 		dir = -1;
 	}
 	y = p.get_y() + 15;
-	dy = 0.0f; 
+	dy = -80.0f; 
 	dx = 300.0f; 
 	distanceTraveled = 0.0f;
 	maxDistance = p.get_snowballDistance();
@@ -40,11 +46,20 @@ snow::~snow() {
 	snow::count--;
 }
 void snow::draw(RenderWindow& window) {
-	ball.setPosition(x, y);
-	window.draw(ball);
+	if (Assets::snow_attack_t.getSize().x > 0 && Assets::snow_attack_t.getSize().y > 0) {
+		Sprite snowSprite;
+		snowSprite.setTexture(Assets::snow_attack_t);
+		snowSprite.setPosition(x, y);
+		snowSprite.setScale(16.0f / Assets::snow_attack_t.getSize().x, 16.0f / Assets::snow_attack_t.getSize().y);
+		window.draw(snowSprite);
+	}
+	else {
+		ball.setPosition(x, y);
+		window.draw(ball);
+	}
 }
-sf::FloatRect snow::getHitbox() const {
-	return sf::FloatRect(x, y, 10.0f, 10.0f);
+FloatRect snow::getHitbox() const {
+	return FloatRect(x, y, 10.0f, 10.0f);
 }
 
 void jump(Player& p) {
@@ -64,6 +79,7 @@ void attack(Player& p, Projectile** projectiles, int& projectile_count) {
 	if (projectile_count < 30 && snow::count < 30) { // Use static count for limit
 		projectiles[projectile_count] = new snow(p);
 		projectile_count++;
+		p.set_pushAnimTimer(0.25f);
 	}
 }
 void Gravity(Player& p, float g, float t) {
@@ -71,13 +87,21 @@ void Gravity(Player& p, float g, float t) {
 }
 void Position_change(Player& p, bool vertical, float v, float t, bool horizontal) {
 	float cur_pos;
-	if (vertical) { cur_pos = p.get_y(); }
-	else { cur_pos = p.get_x(); }
+	if (vertical) { 
+		cur_pos = p.get_y();
+	}
+	else { 
+		cur_pos = p.get_x();
+	}
 	float new_pos = cur_pos + (v * t);
 
 	if (horizontal) {
-		if (new_pos > 800) { new_pos = 0; }
-		else if (new_pos < 0) { new_pos = 800; }
+		if (new_pos > 800) { 
+			new_pos = 0;
+		}
+		else if (new_pos < 0) { 
+			new_pos = 800;
+		}
 	}
 
 	if (vertical) {p.set_y(new_pos);}
@@ -86,11 +110,13 @@ void Position_change(Player& p, bool vertical, float v, float t, bool horizontal
 float Position_check(float s, float v, float t) {
 	return (s + (v * t));
 }
-bool collision_check(sf::FloatRect Player_hitbox, float y ,float v, float t, sf::FloatRect platform_hitbox) {
-	sf::FloatRect new_pos = Player_hitbox;
+bool collision_check(FloatRect Player_hitbox, float y ,float v, float t, FloatRect platform_hitbox) {
+	FloatRect new_pos = Player_hitbox;
 	new_pos.top = Position_check(Player_hitbox.top, v, t);
 	if (new_pos.intersects(platform_hitbox)) {
-		if (v > 0) return true;
+		if (v > 0) {
+			return true;
+		}
 	}
 	return false;
 }

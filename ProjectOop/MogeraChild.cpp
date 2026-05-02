@@ -8,6 +8,7 @@ MogeraChild::MogeraChild(float startX, float startY) {
     hp = 1; 
     speed = 120.0f;
     gemdrop = 5;
+    enemyType = 1;
     // Pick a random initial direction
     directionX = (rand() % 2 == 0) ? 1.0f : -1.0f;
 }
@@ -15,8 +16,9 @@ MogeraChild::MogeraChild(float startX, float startY) {
 void MogeraChild::update(float deltaTime) {
     if (Rolling) {
         x += Roll_speed * deltaTime;
-        if (x < 0) x = 800;
-        if (x > 800) x = 0;
+        if ((x <= 0) || (x + getHitbox().width >= 800)) {
+            kill();
+        }
         return;
     }
     if (update_snow_state(deltaTime)) {
@@ -57,4 +59,12 @@ void MogeraChild::draw(sf::RenderWindow& window) {
 
 void MogeraChild::hit() {
     add_snow(50);
+}
+
+float MogeraChild::get_direction_x() const {
+    return directionX;
+}
+
+void MogeraChild::set_direction_x(float new_direction_x) {
+    directionX = new_direction_x;
 }

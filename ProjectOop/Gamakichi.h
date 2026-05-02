@@ -18,4 +18,12 @@ public:
     }
     void phaseChange() override;
     void fireArtillery();
+    float get_attack_timer() const;
+    float get_attack_duration() const;
+    int get_projectile_count() const;
+    bool get_arm_active() const;
+    void set_attack_timer(float new_attack_timer);
+    void set_attack_duration(float new_attack_duration);
+    void set_projectile_count(int new_projectile_count);
+    void set_arm_active(bool new_arm_active);
 };

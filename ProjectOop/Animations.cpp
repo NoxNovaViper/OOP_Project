@@ -23,6 +23,14 @@ void update_animations(Player& p, float Time, bool left, bool right) {
 		p_num = 1;
 	}
 	bool moving = left || right;
+    float pushTimer = p.get_pushAnimTimer();
+    if (pushTimer > 0.0f) {
+        pushTimer -= Time;
+        if (pushTimer < 0.0f) {
+            pushTimer = 0.0f;
+        }
+        p.set_pushAnimTimer(pushTimer);
+    }
 	if (moving) {
 		timers[p_num] += Time;
 		if (timers[p_num] >= dura) {
@@ -43,7 +51,13 @@ void update_animations(Player& p, float Time, bool left, bool right) {
 	}
 	frame_num += to_string(p.get_cur_frame() + 1);
 
-    if (!p.get_on_ground()) {
+    if (!p.get_isalive()) {
+        int frame = p.get_cur_frame() % 4;
+        p.get_sprite().setTexture(Assets::death[frame], true);
+    } else if (pushTimer > 0.0f) {
+        int frame = p.get_cur_frame() % 4;
+        p.get_sprite().setTexture(Assets::push[frame], true);
+    } else if (!p.get_on_ground()) {
         if (p.get_vy() < 0) {
             //jump
             int frame = p.get_cur_frame() % 6;
