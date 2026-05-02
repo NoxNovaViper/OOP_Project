@@ -1,0 +1,440 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Resource Files\SnowBrosAssets">
+      <UniqueIdentifier>{dccaad11-0d29-4b8b-a170-7ba55a2de47d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\SnowBrosAssets\Fonts">
+      <UniqueIdentifier>{44f99473-ad4c-4f59-8135-c0e1cb651b78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\SnowBrosAssets\Sounds">
+      <UniqueIdentifier>{99f74e9d-9d6d-49e1-839b-c7473a4bb188}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\SnowBrosAssets\Nick_sprites">
+      <UniqueIdentifier>{d4481d20-3f99-445c-aa1f-c6c8eb0bdab9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\SnowBrosAssets\Images">
+      <UniqueIdentifier>{90c58695-b4a2-48cd-8c02-4619ad593107}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\SnowBrosAssets\Level1">
+      <UniqueIdentifier>{22008157-fa81-41f9-88c8-07e702fd9bfb}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="InputHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy_AI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Animations.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Botom.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AuthManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Boss.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="characterChoiceScreen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DataBase.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Gamakichi.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Knife.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FlyingFoogaFoog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Tornado.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Snowball.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AssetLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Mogera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BossDefeatedUI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="characterChoiceUI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameOverUI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HUD.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="levelCompleteUI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="loginScreen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mainmenu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PauseMenu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ArtilleryProjectile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MogeraChild.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="InputHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy_AI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Animations.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Botom.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AuthManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Boss.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="characterChoiceScreen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DataBase.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Gamakichi.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Knife.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FlyngFoogaFoog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tornado.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Snowball.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AssetLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Mogera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BossDefeatedUI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="characterChoiceUI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOverUI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HUD.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="levelCompleteUI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="loginScreen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mainmenu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PauseMenu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ArtilleryProjectile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MogeraChild.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\..\..\Downloads\SnowBrosAssets\SnowBrosAssets\Fonts\Information.txt">
+      <Filter>Resource Files\SnowBrosAssets\Fonts</Filter>
+    </Text>
+    <Text Include="level1.txt">
+      <Filter>Header Files</Filter>
+    </Text>
+    <Text Include="levels.txt">
+      <Filter>Header Files</Filter>
+    </Text>
+    <Text Include="users.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\..\Downloads\SnowBrosAssets\SnowBrosAssets\Images\Player_Red.png">
+      <Filter>Resource Files\SnowBrosAssets\Images</Filter>
+    </Image>
+    <Image Include="..\..\..\..\Downloads\SnowBrosAssets\SnowBrosAssets\Images\Player_Yellow.png">
+      <Filter>Resource Files\SnowBrosAssets\Images</Filter>
+    </Image>
+    <Image Include="..\..\..\..\Downloads\SnowBrosAssets\SnowBrosAssets\Images\Tornado_Blue.png">
+      <Filter>Resource Files\SnowBrosAssets\Images</Filter>
+    </Image>
+    <Image Include="..\..\..\..\Downloads\SnowBrosAssets\SnowBrosAssets\Images\Tornado_Red.png">
+      <Filter>Resource Files\SnowBrosAssets\Images</Filter>
+    </Image>
+    <Image Include="..\..\..\..\Downloads\SnowBrosAssets\SnowBrosAssets\Images\Gamakichi.png">
+      <Filter>Resource Files\SnowBrosAssets\Images</Filter>
+    </Image>
+    <Image Include="..\..\..\..\Downloads\SnowBrosAssets\SnowBrosAssets\Images\Items.png">
+      <Filter>Resource Files\SnowBrosAssets\Images</Filter>
+    </Image>
+    <Image Include="..\..\..\..\Downloads\SnowBrosAssets\SnowBrosAssets\Images\Mogera.png">
+      <Filter>Resource Files\SnowBrosAssets\Images</Filter>
+    </Image>
+    <Image Include="..\..\..\..\Downloads\SnowBrosAssets\SnowBrosAssets\Images\Nick.png">
+      <Filter>Resource Files\SnowBrosAssets\Images</Filter>
+    </Image>
+    <Image Include="..\..\..\..\Downloads\SnowBrosAssets\SnowBrosAssets\Images\Player_Blue.png">
+      <Filter>Resource Files\SnowBrosAssets\Images</Filter>
+    </Image>
+    <Image Include="..\..\..\..\Downloads\SnowBrosAssets\SnowBrosAssets\Images\Player_Green.png">
+      <Filter>Resource Files\SnowBrosAssets\Images</Filter>
+    </Image>
+    <Image Include="..\..\..\..\Downloads\SnowBrosAssets\SnowBrosAssets\Images\Botom_Blue.png">
+      <Filter>Resource Files\SnowBrosAssets\Images</Filter>
+    </Image>
+    <Image Include="..\..\..\..\Downloads\SnowBrosAssets\SnowBrosAssets\Images\Botom_Orange.png">
+      <Filter>Resource Files\SnowBrosAssets\Images</Filter>
+    </Image>
+    <Image Include="..\..\..\..\Downloads\SnowBrosAssets\SnowBrosAssets\Images\Botom_Pink.png">
+      <Filter>Resource Files\SnowBrosAssets\Images</Filter>
+    </Image>
+    <Image Include="..\..\..\..\Downloads\SnowBrosAssets\SnowBrosAssets\Images\FlyingFoogaFoog_Blue.png">
+      <Filter>Resource Files\SnowBrosAssets\Images</Filter>
+    </Image>
+    <Image Include="..\..\..\..\Downloads\SnowBrosAssets\SnowBrosAssets\Images\FlyingFoogaFoog_Orange.png">
+      <Filter>Resource Files\SnowBrosAssets\Images</Filter>
+    </Image>
+    <Image Include="..\..\..\..\Downloads\SnowBrosAssets\SnowBrosAssets\Images\FlyingFoogaFoog_Red.png">
+      <Filter>Resource Files\SnowBrosAssets\Images</Filter>
+    </Image>
+    <Image Include="SnowBrosAssets\Nick_sprites\fall_01.png">
+      <Filter>Resource Files\SnowBrosAssets\Nick_sprites</Filter>
+    </Image>
+    <Image Include="SnowBrosAssets\Nick_sprites\jump_01.png">
+      <Filter>Resource Files\SnowBrosAssets\Nick_sprites</Filter>
+    </Image>
+    <Image Include="SnowBrosAssets\Nick_sprites\jump_02.png">
+      <Filter>Resource Files\SnowBrosAssets\Nick_sprites</Filter>
+    </Image>
+    <Image Include="SnowBrosAssets\Nick_sprites\jump_03.png">
+      <Filter>Resource Files\SnowBrosAssets\Nick_sprites</Filter>
+    </Image>
+    <Image Include="SnowBrosAssets\Nick_sprites\jump_04.png">
+      <Filter>Resource Files\SnowBrosAssets\Nick_sprites</Filter>
+    </Image>
+    <Image Include="SnowBrosAssets\Nick_sprites\jump_05.png">
+      <Filter>Resource Files\SnowBrosAssets\Nick_sprites</Filter>
+    </Image>
+    <Image Include="SnowBrosAssets\Nick_sprites\jump_06.png">
+      <Filter>Resource Files\SnowBrosAssets\Nick_sprites</Filter>
+    </Image>
+    <Image Include="SnowBrosAssets\Nick_sprites\run_01.png">
+      <Filter>Resource Files\SnowBrosAssets\Nick_sprites</Filter>
+    </Image>
+    <Image Include="SnowBrosAssets\Nick_sprites\run_02.png">
+      <Filter>Resource Files\SnowBrosAssets\Nick_sprites</Filter>
+    </Image>
+    <Image Include="SnowBrosAssets\Nick_sprites\run_03.png">
+      <Filter>Resource Files\SnowBrosAssets\Nick_sprites</Filter>
+    </Image>
+    <Image Include="SnowBrosAssets\Nick_sprites\run_04.png">
+      <Filter>Resource Files\SnowBrosAssets\Nick_sprites</Filter>
+    </Image>
+    <Image Include="SnowBrosAssets\Nick_sprites\walk_01.png">
+      <Filter>Resource Files\SnowBrosAssets\Nick_sprites</Filter>
+    </Image>
+    <Image Include="SnowBrosAssets\Nick_sprites\walk_02.png">
+      <Filter>Resource Files\SnowBrosAssets\Nick_sprites</Filter>
+    </Image>
+    <Image Include="SnowBrosAssets\Nick_sprites\walk_03.png">
+      <Filter>Resource Files\SnowBrosAssets\Nick_sprites</Filter>
+    </Image>
+    <Image Include="SnowBrosAssets\Nick_sprites\walk_04.png">
+      <Filter>Resource Files\SnowBrosAssets\Nick_sprites</Filter>
+    </Image>
+    <Image Include="SnowBrosAssets\Level10\bg.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="SnowBrosAssets\Level10\tile.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="SnowBrosAssets\Level1\bg.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="SnowBrosAssets\Level1\tile.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="SnowBrosAssets\Level2\bg.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="SnowBrosAssets\Level2\tile.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="SnowBrosAssets\Level3\bg.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="SnowBrosAssets\Level3\tile.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="SnowBrosAssets\Level4\bg.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="SnowBrosAssets\Level4\tile.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="SnowBrosAssets\Level5\bg.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="SnowBrosAssets\Level5\tile.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="SnowBrosAssets\Level6\bg.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="SnowBrosAssets\Level6\tile.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="SnowBrosAssets\Level7\bg.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="SnowBrosAssets\Level7\tile.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="SnowBrosAssets\Level8\bg.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="SnowBrosAssets\Level8\tile.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="SnowBrosAssets\Level9\bg.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="SnowBrosAssets\Level9\tile.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="SnowBrosAssets\lose1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="SnowBrosAssets\lose2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="SnowBrosAssets\start1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="SnowBrosAssets\start2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="BG.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="loginBG.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="menubg.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="nick.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="tiger.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="tom.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="UIbg.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="UIbg2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="UIbg3.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SnowBrosAssets\Sounds\final_boss_snow_bros.ogg" />
+    <None Include="SnowBrosAssets\Sounds\snow_bros_level.ogg" />
+    <None Include="SnowBrosAssets\Sounds\snow_bros_theme_01.ogg" />
+    <None Include="SnowBrosAssets\Sounds\snow_bros_theme_02.ogg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="SnowBrosAssets\Fonts\Starborn.ttf">
+      <Filter>Resource Files\SnowBrosAssets\Fonts</Filter>
+    </Font>
+    <Font Include="arial.TTF" />
+  </ItemGroup>
+</Project>

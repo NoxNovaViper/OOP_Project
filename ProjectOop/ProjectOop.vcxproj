@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>18.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{62ec1b39-3f79-4bbe-a46e-d98962b96f05}</ProjectGuid>
+    <RootNamespace>ProjectOop</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>C:\Users\HP\Downloads\SFML-2.6.2-windows-vc17-64-bit\SFML-2.6.2\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\HP\Downloads\SFML-2.6.2-windows-vc17-64-bit\SFML-2.6.2\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Manifest>
+      <EnableSegmentHeap>true</EnableSegmentHeap>
+    </Manifest>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Manifest>
+      <EnableSegmentHeap>true</EnableSegmentHeap>
+    </Manifest>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>sfml-graphics-d.lib;sfml-window-d.lib;sfml-system-d.lib;sfml-audio-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <Manifest>
+      <EnableSegmentHeap>true</EnableSegmentHeap>
+    </Manifest>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Manifest>
+      <EnableSegmentHeap>true</EnableSegmentHeap>
+    </Manifest>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="ArtilleryProjectile.cpp" />
+    <ClCompile Include="BossDefeatedUI.cpp" />
+    <ClCompile Include="characterChoiceUI.cpp" />
+    <ClCompile Include="GameOverUI.cpp" />
+    <ClCompile Include="HUD.cpp" />
+    <ClCompile Include="levelCompleteUI.cpp" />
+    <ClCompile Include="loginScreen.cpp" />
+    <ClCompile Include="mainmenu.cpp" />
+    <ClCompile Include="MogeraChild.cpp" />
+    <ClCompile Include="PauseMenu.cpp" />
+    <ClCompile Include="Animations.cpp" />
+    <ClCompile Include="AssetLoader.cpp" />
+    <ClCompile Include="AuthManager.cpp" />
+    <ClCompile Include="Boss.cpp" />
+    <ClCompile Include="Botom.cpp" />
+    <ClCompile Include="characterChoiceScreen.cpp" />
+    <ClCompile Include="DataBase.cpp" />
+    <ClCompile Include="EnemyFactory.cpp" />
+    <ClCompile Include="Enemy_AI.cpp" />
+    <ClCompile Include="FlyingFoogaFoog.cpp" />
+    <ClCompile Include="Gamakichi.cpp" />
+    <ClCompile Include="Knife.cpp" />
+    <ClCompile Include="LevelManager.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="InputHandler.cpp" />
+    <ClCompile Include="Mogera.cpp" />
+    <ClCompile Include="Physics.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Snowball.cpp" />
+    <ClCompile Include="Tornado.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ArtilleryProjectile.h" />
+    <ClInclude Include="BossDefeatedUI.h" />
+    <ClInclude Include="characterChoiceUI.h" />
+    <ClInclude Include="GameOverUI.h" />
+    <ClInclude Include="HUD.h" />
+    <ClInclude Include="levelCompleteUI.h" />
+    <ClInclude Include="loginScreen.h" />
+    <ClInclude Include="mainmenu.h" />
+    <ClInclude Include="MogeraChild.h" />
+    <ClInclude Include="PauseMenu.h" />
+    <ClInclude Include="Animations.h" />
+    <ClInclude Include="AssetLoader.h" />
+    <ClInclude Include="AuthManager.h" />
+    <ClInclude Include="Boss.h" />
+    <ClInclude Include="Botom.h" />
+    <ClInclude Include="characterChoiceScreen.h" />
+    <ClInclude Include="DataBase.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyFactory.h" />
+    <ClInclude Include="Enemy_AI.h" />
+    <ClInclude Include="FlyngFoogaFoog.h" />
+    <ClInclude Include="Gamakichi.h" />
+    <ClInclude Include="InputHandler.h" />
+    <ClInclude Include="Knife.h" />
+    <ClInclude Include="LevelManager.h" />
+    <ClInclude Include="Mogera.h" />
+    <ClInclude Include="Physics.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="Projectile.h" />
+    <ClInclude Include="Snowball.h" />
+    <ClInclude Include="Tornado.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="users.txt" />
+    <Text Include="..\..\..\..\Downloads\SnowBrosAssets\SnowBrosAssets\Fonts\Information.txt" />
+    <Text Include="level1.txt" />
+    <Text Include="levels.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="BG.png" />
+    <Image Include="loginBG.png" />
+    <Image Include="menubg.png" />
+    <Image Include="nick.png" />
+    <Image Include="tiger.png" />
+    <Image Include="tom.png" />
+    <Image Include="UIbg.png" />
+    <Image Include="UIbg2.png" />
+    <Image Include="UIbg3.png" />
+    <Image Include="..\..\..\..\Downloads\SnowBrosAssets\SnowBrosAssets\Images\Botom_Blue.png" />
+    <Image Include="..\..\..\..\Downloads\SnowBrosAssets\SnowBrosAssets\Images\Botom_Orange.png" />
+    <Image Include="..\..\..\..\Downloads\SnowBrosAssets\SnowBrosAssets\Images\Botom_Pink.png" />
+    <Image Include="..\..\..\..\Downloads\SnowBrosAssets\SnowBrosAssets\Images\FlyingFoogaFoog_Blue.png" />
+    <Image Include="..\..\..\..\Downloads\SnowBrosAssets\SnowBrosAssets\Images\FlyingFoogaFoog_Orange.png" />
+    <Image Include="..\..\..\..\Downloads\SnowBrosAssets\SnowBrosAssets\Images\FlyingFoogaFoog_Red.png" />
+    <Image Include="..\..\..\..\Downloads\SnowBrosAssets\SnowBrosAssets\Images\Gamakichi.png" />
+    <Image Include="..\..\..\..\Downloads\SnowBrosAssets\SnowBrosAssets\Images\Items.png" />
+    <Image Include="..\..\..\..\Downloads\SnowBrosAssets\SnowBrosAssets\Images\Mogera.png" />
+    <Image Include="..\..\..\..\Downloads\SnowBrosAssets\SnowBrosAssets\Images\Nick.png" />
+    <Image Include="..\..\..\..\Downloads\SnowBrosAssets\SnowBrosAssets\Images\Player_Blue.png" />
+    <Image Include="..\..\..\..\Downloads\SnowBrosAssets\SnowBrosAssets\Images\Player_Green.png" />
+    <Image Include="..\..\..\..\Downloads\SnowBrosAssets\SnowBrosAssets\Images\Player_Red.png" />
+    <Image Include="..\..\..\..\Downloads\SnowBrosAssets\SnowBrosAssets\Images\Player_Yellow.png" />
+    <Image Include="..\..\..\..\Downloads\SnowBrosAssets\SnowBrosAssets\Images\Tornado_Blue.png" />
+    <Image Include="..\..\..\..\Downloads\SnowBrosAssets\SnowBrosAssets\Images\Tornado_Red.png" />
+    <Image Include="SnowBrosAssets\Level10\bg.png" />
+    <Image Include="SnowBrosAssets\Level10\tile.png" />
+    <Image Include="SnowBrosAssets\Level1\bg.png" />
+    <Image Include="SnowBrosAssets\Level1\tile.png" />
+    <Image Include="SnowBrosAssets\Level2\bg.png" />
+    <Image Include="SnowBrosAssets\Level2\tile.png" />
+    <Image Include="SnowBrosAssets\Level3\bg.png" />
+    <Image Include="SnowBrosAssets\Level3\tile.png" />
+    <Image Include="SnowBrosAssets\Level4\bg.png" />
+    <Image Include="SnowBrosAssets\Level4\tile.png" />
+    <Image Include="SnowBrosAssets\Level5\bg.png" />
+    <Image Include="SnowBrosAssets\Level5\tile.png" />
+    <Image Include="SnowBrosAssets\Level6\bg.png" />
+    <Image Include="SnowBrosAssets\Level6\tile.png" />
+    <Image Include="SnowBrosAssets\Level7\bg.png" />
+    <Image Include="SnowBrosAssets\Level7\tile.png" />
+    <Image Include="SnowBrosAssets\Level8\bg.png" />
+    <Image Include="SnowBrosAssets\Level8\tile.png" />
+    <Image Include="SnowBrosAssets\Level9\bg.png" />
+    <Image Include="SnowBrosAssets\Level9\tile.png" />
+    <Image Include="SnowBrosAssets\lose1.png" />
+    <Image Include="SnowBrosAssets\lose2.png" />
+    <Image Include="SnowBrosAssets\Nick_sprites\fall_01.png" />
+    <Image Include="SnowBrosAssets\Nick_sprites\jump_01.png" />
+    <Image Include="SnowBrosAssets\Nick_sprites\jump_02.png" />
+    <Image Include="SnowBrosAssets\Nick_sprites\jump_03.png" />
+    <Image Include="SnowBrosAssets\Nick_sprites\jump_04.png" />
+    <Image Include="SnowBrosAssets\Nick_sprites\jump_05.png" />
+    <Image Include="SnowBrosAssets\Nick_sprites\jump_06.png" />
+    <Image Include="SnowBrosAssets\Nick_sprites\run_01.png" />
+    <Image Include="SnowBrosAssets\Nick_sprites\run_02.png" />
+    <Image Include="SnowBrosAssets\Nick_sprites\run_03.png" />
+    <Image Include="SnowBrosAssets\Nick_sprites\run_04.png" />
+    <Image Include="SnowBrosAssets\Nick_sprites\walk_01.png" />
+    <Image Include="SnowBrosAssets\Nick_sprites\walk_02.png" />
+    <Image Include="SnowBrosAssets\Nick_sprites\walk_03.png" />
+    <Image Include="SnowBrosAssets\Nick_sprites\walk_04.png" />
+    <Image Include="SnowBrosAssets\start1.png" />
+    <Image Include="SnowBrosAssets\start2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SnowBrosAssets\Sounds\final_boss_snow_bros.ogg" />
+    <None Include="SnowBrosAssets\Sounds\snow_bros_level.ogg" />
+    <None Include="SnowBrosAssets\Sounds\snow_bros_theme_01.ogg" />
+    <None Include="SnowBrosAssets\Sounds\snow_bros_theme_02.ogg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="arial.TTF" />
+    <Font Include="SnowBrosAssets\Fonts\Starborn.ttf" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
