@@ -3,6 +3,7 @@
 #include "FlyngFoogaFoog.h"
 #include "Tornado.h"
 #include "Mogera.h"
+#include "MogeraChild.h"
 #include "Gamakichi.h"
 
 Enemy* EnemyFactory::e(const std::string& type, float x, float y) {
@@ -14,6 +15,8 @@ Enemy* EnemyFactory::e(const std::string& type, float x, float y) {
         return new Tornado(x, y);
     if (type == "Mogera")
         return new Mogera(x, y);
+    if (type == "MogeraChild")
+        return new MogeraChild(x, y);
     if (type == "Gamakichi")
         return new Gamakichi(x, y);
 

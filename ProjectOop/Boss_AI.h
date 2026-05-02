@@ -1,1 +1,15 @@
 #pragma once
+#include "Mogera.h"
+#include "Gamakichi.h"
+#include "EnemyFactory.h"
+#include "Boss.h"
+#include "Physics.h"
+#include "Player.h"
+#include "LevelManager.h"
+#include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
+#include <iostream>
+#include <string>
+#include <cmath>
+#include <cstdlib>
+#include <ctime>

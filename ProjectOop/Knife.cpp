@@ -14,4 +14,9 @@ Knife::Knife(float startX, float startY, float targetX, float targetY) {
 }
 
 void Knife::update(float deltaTime) {}
-void Knife::draw() {}
+void Knife::draw(sf::RenderWindow& window) {
+    sf::RectangleShape projShape(sf::Vector2f(15, 5));
+    projShape.setPosition(x, y);
+    projShape.setFillColor(sf::Color::White);
+    window.draw(projShape);
+}

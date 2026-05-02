@@ -1,7 +1,8 @@
 #pragma once
 #include"Botom.h"
+#include <SFML/Graphics.hpp>
 class FlyngFoogafoog : public Botom {
-private:
+protected:
 	float flyDuration;
 	float groundDuration;
 	float flyTimer;
@@ -12,7 +13,7 @@ private:
 public:
 	FlyngFoogafoog(float startX, float startY);
 	void update(float deltaTime) override;
-	void draw() override;
+	void draw(sf::RenderWindow& window) override;
 	void hit() override;
 
 };

@@ -20,14 +20,19 @@ float Platform_Maker::get_w(platform p) {
 float Platform_Maker::get_h(platform p) {
 	return p.h;
 }
-void Level_Maker::create_level(int num_platforms, platform* platforms) {
+void Level_Maker::create_level(int num_platforms, platform* platforms, int num_enemies, enemy_spawn* enemies) {
 	if (l != nullptr) {
 		delete[] l->platforms;
+		if (l->enemies != nullptr) {
+			delete[] l->enemies;
+		}
 		delete l;
 	}
 	l = new level;
 	l->num_platforms = num_platforms;
 	l->platforms = platforms;
+	l->num_enemies = num_enemies;
+	l->enemies = enemies;
 }
 Level_Maker::Level_Maker() {
 	l = nullptr;
@@ -35,6 +40,9 @@ Level_Maker::Level_Maker() {
 Level_Maker::~Level_Maker() {
 	if (l != nullptr) {
 		delete[] l->platforms;
+		if (l->enemies != nullptr) {
+			delete[] l->enemies;
+		}
 		delete l;
 		l = nullptr;
 	}
@@ -68,6 +76,9 @@ Level_Manager::Level_Manager() {
 	temp = nullptr;
 	//other initializations
 	total_levels = c;
+	s.start_screen = true;
+	s.login = false;
+	s.character_select = false;
 	s.play = false;
 	s.pause = false;
 	s.boss = false;
@@ -76,14 +87,24 @@ Level_Manager::Level_Manager() {
 	s.win = false;
 	s.lose = false;
 	s.debug = false;
+	s.next_level = false;
 }
 void Level_Manager::next_level() {
 	static int cur = -1;//current level
 	cur += 1;//update level
 	if (cur < total_levels) {
-		ifstream file(level_data[cur]);
+		string filename = level_data[cur];
+		// Sanitize string to remove any hidden carriage returns or trailing spaces manually (no algorithm library)
+		string clean_filename = "";
+		for (int i = 0; i < filename.length(); i++) {
+			char c = filename[i];
+			if (c != '\r' && c != '\n' && c != ' ' && c != '\t') {
+				clean_filename += c;
+			}
+		}
+		ifstream file(clean_filename);
 		if (!file.is_open()) {
-			cout << "Failed to open level file: " << level_data[cur] << endl;
+			cout << "Failed to open level file: " << clean_filename << endl;
 			return;
 		}
 		int c;
@@ -98,7 +119,19 @@ void Level_Manager::next_level() {
 			next_p[i].h = h;
 			next_p[i].collison = FloatRect(x, y, w, h);
 		}
-		levels.create_level(c, next_p);//level makercreates new level
+		int e_count = 0;
+		if (file >> e_count) {
+			enemy_spawn* next_e = nullptr;
+			if (e_count > 0) {
+				next_e = new enemy_spawn[e_count];
+				for (int i = 0; i < e_count; i++) {
+					file >> next_e[i].type >> next_e[i].x >> next_e[i].y;
+				}
+			}
+			levels.create_level(c, next_p, e_count, next_e);//level makercreates new level
+		} else {
+			levels.create_level(c, next_p, 0, nullptr);//fallback if no enemies in file
+		}
 
 		//play transition jump animation sound etc
 
@@ -111,6 +144,15 @@ void Level_Manager::next_level() {
 }
 Level_Manager::~Level_Manager() {
 	delete[] level_data;
+}
+void Level_Manager::set_start_screen(bool start_screen) {
+	s.start_screen = start_screen;
+}
+void Level_Manager::set_login(bool login) {
+	s.login = login;
+}
+void Level_Manager::set_character_select(bool character_select) {
+	s.character_select = character_select;
 }
 void Level_Manager::set_debug(bool debug) {
 	s.debug = debug;
@@ -136,6 +178,21 @@ void Level_Manager::set_win(bool win) {
 void Level_Manager::set_lose(bool lose) {
 	s.lose = lose;
 }
+void Level_Manager::set_next_level(bool next_level) {
+	s.next_level = next_level;
+}
+void Level_Manager::set_main_menu(bool m) {
+	s.main_menu = m;
+}
+bool Level_Manager::get_start_screen() {
+	return s.start_screen;
+}
+bool Level_Manager::get_login() {
+	return s.login;
+}
+bool Level_Manager::get_character_select() {
+	return s.character_select;
+}
 bool Level_Manager::get_debug() {
 	return s.debug;
 }
@@ -160,6 +217,13 @@ bool Level_Manager::get_win() {
 bool Level_Manager::get_lose() {
 	return s.lose;
 }
+bool Level_Manager::get_next_level() {
+	return s.next_level;
+}
+bool Level_Manager::get_main_menu() {
+	return s.main_menu;
+}
+
 // In Level_Maker
 level* Level_Maker::get_level() { 
 	return l;

@@ -6,7 +6,9 @@ bool search(int player_x, int enemy_x, int player_y, int enemy_y) {
 	return false;
 }
 void update_fireball(CircleShape& fireball, bool& active, FloatRect player_hitbox) {
-    if (!active) return;
+    if (!active) {
+        return;
+    }
     fireball.move(2.0f, 0.0f);
     if (fireball.getGlobalBounds().intersects(player_hitbox)) {
         active = false;
@@ -15,8 +17,8 @@ void update_fireball(CircleShape& fireball, bool& active, FloatRect player_hitbo
         active = false;
     }
 }
-void Frozen() {
-    //playes freeze animation
+void frozen(){
+
 }
 void defrost() {
 	//plays defrost animation

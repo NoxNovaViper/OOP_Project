@@ -77,6 +77,11 @@ void Player::enemykilled(int enemyType) {
 void Player::chainreset() {
     chaincount = 0;
 }
+void Player::addLives() {
+    lives+=1;
+    addlives = true;
+}
+
 
 bool Player::spendgems(int amount) {
     if (gemCount >= amount) {
@@ -99,6 +104,7 @@ void Player::pickGem(int amount) {
 void Player::pickPowerUp() {}
 
 //Getters for player attributes
+bool Player::get_addlives() { return addlives; }
 string Player::get_name() { return name; }
 Sprite& Player::get_sprite() { return sprite; }
 Texture& Player::get_texture() { return texture; }
@@ -128,7 +134,9 @@ bool Player::get_distanceincreaseActive() { return distanceincreaseActive; }
 bool Player::get_balloonmodeActive() { return balloonmodeActive; }
 
 
+
 //setters for player attributes
+void Player::set_addlives(bool a) { addlives = a; }
 void Player::set_name(string new_name) { name = new_name; }
 void Player::set_sprite(Sprite s) { sprite = s; }
 void Player::set_texture(Texture t) { texture = t; }

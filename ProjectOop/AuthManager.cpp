@@ -41,7 +41,7 @@ string AuthManager::hashPassword(const string& password) {
 }
 bool AuthManager::registerUser(const string& username, const string& password) {
     // first check is username available
-    ifstream readfile("users.txt");
+    ifstream readfile("SnowBrosAssets\Start\users.txt");
     string line;
     while (getline(readfile, line)) {
         stringstream ss(line);
@@ -54,7 +54,7 @@ bool AuthManager::registerUser(const string& username, const string& password) {
     }
     readfile.close();
     //current username is available
-    ofstream writefile("users.txt", ios::app);
+    ofstream writefile("SnowBrosAssets\Start\users.txt", ios::app);
     if (!writefile.is_open())
         return false;
     writefile << username << "|" << hashPassword(password) << "\n";
@@ -63,7 +63,7 @@ bool AuthManager::registerUser(const string& username, const string& password) {
 }
 bool AuthManager::loginUser(const string& username, const string& password) {
 
-    ifstream readfile("users.txt");
+    ifstream readfile("SnowBrosAssets\Start\users.txt");
     if (!readfile.is_open()) return false;
     string line;
     string hashinput = hashPassword(password);

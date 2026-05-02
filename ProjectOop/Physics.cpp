@@ -1,4 +1,47 @@
 #include "Physics.h"
+int snow::count = 0;
+
+void snow::update(float time) {
+	dy += gravity * time;
+	x += dx * time * dir;
+	y += dy * time;
+
+	if (x < 0) {
+		x = 800;
+	}
+	if (x > 800) {
+		x = 0;
+	}
+	if (y > 600) {
+		isactive = false;
+	}
+}
+snow::snow(Player& p) {
+	x = p.get_x();
+	if (p.right_facing) {
+		x += 15;
+		dir = 1;
+	}
+	else {
+		x -= 15;
+		dir = -1;
+	}
+	y = p.get_y() + 15;
+	dy = -250.0f; 
+	dx = 300.0f; 
+	isactive = true;
+	ball.setRadius(5);
+	ball.setFillColor(Color::White);
+	snow::count++; // Increment static count
+}
+snow::~snow() {
+	snow::count--; // Decrement static count
+}
+void snow::draw(RenderWindow& window) {
+	ball.setPosition(x, y);
+	window.draw(ball);
+}
+
 void jump(Player& p) {
 	if (p.on_ground) {
 		p.vy = -p.jump_power;
@@ -12,8 +55,11 @@ void fall(Player& p, float len) {
 void p_move(Player& p, float speed, float t, bool horizontal) {
 	Position_change(p, false, speed, t, horizontal);
 }
-void attack(Player& p) {
-    // Placeholder for attack logic
+void attack(Player& p, Projectile** projectiles, int& projectile_count) {
+	if (snow::count < 30) { // Use static count for limit
+		projectiles[projectile_count] = new snow(p);
+		projectile_count++;
+	}
 }
 void Gravity(Player& p, float g, float t) {
 	p.vy = p.vy + (g * t);

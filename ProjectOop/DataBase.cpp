@@ -6,7 +6,7 @@
 using namespace std;
 
 
-//to conbert int into string
+//to convert int into string
 string intToStr(int num) {
     if (num == 0)
         return "0";
@@ -56,7 +56,7 @@ Database::Database() {}
 // to save player progress 
 void Database::saveProgress(const string& username, int level, int lives, int gems, int score) {
 
-    ifstream file("progress.txt");
+    ifstream file("SnowBrosAssets\Start\progress.txt");
     string Data = "";
     string line;
     bool found = false;
@@ -86,7 +86,7 @@ void Database::saveProgress(const string& username, int level, int lives, int ge
             intToStr(score) + "\n";
     }
     // writing everything 
-    ofstream writefile("progress.txt");
+    ofstream writefile("SnowBrosAssets\Start\progress.txt");
     writefile << Data;
     writefile.close();
 }
@@ -94,7 +94,7 @@ void Database::saveProgress(const string& username, int level, int lives, int ge
 // finds player by username and fills their data
 void Database::loadProgress(const string& username, int& level, int& lives,
     int& gems, int& score) {
-    ifstream readFile("progress.txt");
+    ifstream readFile("SnowBrosAssets\Start\progress.txt");
     string line;
     while (getline(readFile, line)) {
         stringstream ss(line);
@@ -127,7 +127,7 @@ void Database::loadProgress(const string& username, int& level, int& lives,
 
 // adding new score to leaderboard
 void Database::saveLeaderboard(const string& username, int score, int level) {
-    ofstream writeFile("leaderboard.txt", ios::app);
+    ofstream writeFile("SnowBrosAssets\Start\leaderboard.txt", ios::app);
     writeFile << username << "|"
         << intToStr(score) << "|"
         << intToStr(level) << "\n";
@@ -136,7 +136,7 @@ void Database::saveLeaderboard(const string& username, int score, int level) {
 
 
 void Database::displayLeaderboard() {
-    ifstream readFile("leaderboard.txt");
+    ifstream readFile("SnowBrosAssets\Start\leaderboard.txt");
     // store all entries
     string usernames[100];
     int scores[100];
@@ -154,11 +154,11 @@ void Database::displayLeaderboard() {
         usernames[count] = username;
         scores[count] = strToInt(score);
         levels[count] = strToInt(level);
-        // cout << count<< ". "<< usernames << " | Score: " << scores << " | Level: " << levels << endl;
+        //cout << count<< ". "<< usernames << " | Score: " << scores << " | Level: " << levels << endl;
         count++;
     }
     readFile.close();
-    // bubble sorting
+    //bubble sorting
     for (int i = 0; i < count - 1; i++) {
         for (int j = 0; j < count - i - 1; j++) {
             if (scores[j] < scores[j + 1]) {
@@ -178,8 +178,7 @@ void Database::displayLeaderboard() {
         }
     }
     cout << "\n    ||||  LEADERBOARD TOP 10  ||||" << endl;
-    for (int i = 0;i < 10;i++)
-    {
+    for (int i = 0;i < 10;i++) {
         cout << i << ". " << usernames << " | Score: " << scores << " | Level: " << levels << endl;
     }
 }

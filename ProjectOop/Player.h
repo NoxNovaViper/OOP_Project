@@ -23,7 +23,7 @@ private:
     bool snowballpowerActive;
     bool distanceincreaseActive;
     bool balloonmodeActive;
-
+    bool addlives;
 
 public:
     string name;
@@ -31,13 +31,13 @@ public:
     Texture texture;
     FloatRect hitbox;
     int cur_frame = 0;
-    float vy = 0;
+	float vy = 0;//vertical velocity for gravity and jumping
+    bool right_facing;
     bool on_ground = false;
-    float jump_power = 900.0f;
-
-
+    float jump_power = 600.0f;
 
 	//Getters for player attributes
+	bool get_addlives();
     string get_name();
     Sprite& get_sprite();
     Texture& get_texture();
@@ -68,6 +68,7 @@ public:
 
 
 	//setters for player attributes
+    void set_addlives(bool a);
     void set_name(string new_name);
     void set_sprite(Sprite s);
     void set_texture(Texture t);
@@ -110,8 +111,13 @@ public:
     void activateSnowballpower();
     void activateDistanceincreased();
     void activateBalloonmode();
+    void addLives();
+  
 
     int getLives() const {
+        return lives;
+    }
+    int getHP() const {
         return lives;
     }
     int getScore() const {
