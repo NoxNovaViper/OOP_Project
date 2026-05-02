@@ -14,23 +14,19 @@ Player::Player(float startX, float startY, int playerNum, int charactype) {
     speed = 100.0f;
     snowballPower = 1.0f;
     snowballDistance = 600.0f;
-
-    if (charactype == 1)  //nick
-    {
+    if (charactype == 1){
         name = "Nick";
         speed = 100.0f;
         snowballPower = 1.0f;
         snowballDistance = 600.0f;
     }
-    else if (charactype == 2)
-    {
+    else if (charactype == 2){
         name = "Tom";
         speed = 200.0f;
         snowballPower = 1.0f;
         snowballDistance = 500.0f;
     }
-    else if (charactype == 3)
-    {
+    else if (charactype == 3){
         name = "Bob";
         speed = 150.0f;
         snowballPower = 1.0f;
@@ -39,38 +35,44 @@ Player::Player(float startX, float startY, int playerNum, int charactype) {
 }
 void Player::activateSpeedboost() {
     speedboostActive = true;
-    speedboostTimer = 15.0f;  // lasts 15 seconds
+    speedboostTimer = 15.0f; 
     speed = speed * 1.5f;
 }
 
 void Player::activateSnowballpower() {
-    snowballpowerActive = true;  // lasts until level end
+    snowballpowerActive = true;
     snowballPower = 2.0f;
 }
 void Player::activateDistanceincreased() {
-    distanceincreaseActive = true;  // lasts until level end
+    distanceincreaseActive = true;
     snowballDistance = 800.0f;
 }
 
 void Player::activateBalloonmode() {
     balloonmodeActive = true;
-    balloonmodeTimer = 10.0f;  // lasts 10 seconds
+    balloonmodeTimer = 10.0f;
 }
 
 void Player::enemykilled(int enemyType) {
     int points = 0;
-    if (enemyType == 1)       // Botom
+    if (enemyType == 1) {//Botom
         points = 100 + rand() % 401;
-    else if (enemyType == 2)  // Flyngfooga
+    }
+    else if (enemyType == 2) {//Flyngfooga
         points = 200 + rand() % 601;
-    else if (enemyType == 3)  // Tornado
+    }
+    else if (enemyType == 3) {//Tornado
         points = 300 + rand() % 901;
-    else if (enemyType == 4)  // Mogera
+    }
+    else if (enemyType == 4){//Mogera
         points = 5000;
-    else if (enemyType == 5)  // Gamakichi
+    }
+    else if (enemyType == 5) {//Gamakichi
         points = 10000;
-    if (chaincount > 0)
+    }
+    if (chaincount > 0) {
         points = points + (points * chaincount * 10 / 100);
+    }
     score += points;
     chaincount++;
 }

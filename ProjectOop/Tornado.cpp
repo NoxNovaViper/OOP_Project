@@ -8,24 +8,25 @@ Tornado::Tornado(float startX, float startY)
     flyspeedrandomly = 100.0f;
     hp = 4;
 }
-
 void Tornado::update(float deltaTime) {
-    if (isencased) return;
-
-    // Inherit the flying/ground behavior
+    if (Rolling) {
+        FlyngFoogafoog::update(deltaTime);
+        return;
+    }
+    if (update_snow_state(deltaTime)) return;
+    //behavior inherited
     FlyngFoogafoog::update(deltaTime);
-
-    // Tornado specific: Knife throwing
+    //knife throw
     knifeTimer += deltaTime;
     if (knifeTimer >= knifeDuration) {
         knifeThrow();
         knifeTimer = 0.0f;
     }
-
-    // Unpredictable flight speed changes
-    if (getHP() < 2) flyspeedrandomly = 200.0f;
-
-    // Tornado lands on the ground too when not flying
+    //random tp
+    if (getHP() < 2) {
+        flyspeedrandomly = 200.0f;
+    }
+    //on land
     if (!isFlying) {
         applyGravity(deltaTime);
     }
@@ -38,14 +39,14 @@ void Tornado::draw(sf::RenderWindow& window) {
     enemySprite.setPosition(x, y);
     enemySprite.setScale(48.0f / frameSize, 48.0f / frameSize);
     window.draw(enemySprite);
+    drawSnowOverlay(window, 48.0f, 48.0f);
 }
 void Tornado::hit() {
-    hp--;
-    if (hp <= 0) isencased = true;
+    add_snow(25);
 }
-void Tornado::kill() { hp = 0; isencased = false; }
+void Tornado::kill() { 
+    hp = 0; isencased = false;
+}
 void Tornado::knifeThrow() {
-    // Note: To actually spawn a knife, we'd need to pass the projectile list
-    // For now, we will simulate the behavior by resetting the timer.
-    // In a full implementation, main.cpp would handle the spawning.
+//didnt do rn
 }

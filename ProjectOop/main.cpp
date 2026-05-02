@@ -1,6 +1,5 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
-#include "Attack.h"
 #include "Enemy_AI.h"
 #include "InputHandler.h"
 #include "Physics.h"
@@ -92,28 +91,26 @@ int main(){
     t2_t.setPosition(300, 300);
     t3_t.setPosition(300, 400);
 
-    // Start screen sprite
+    //Starting screen sprites
     Sprite start_s(Assets::start_t1);
     start_s.setScale(800.0f / Assets::start_t1.getSize().x, 600.0f / Assets::start_t1.getSize().y);
     float start_timer = 0.0f;
     int start_frame = 0;
 
-    // Lose screen sprite
+    //Losing screen sprite
     Sprite lose_s(Assets::lose_t);
     lose_s.setScale(800.0f / Assets::lose_t.getSize().x, 600.0f / Assets::lose_t.getSize().y);
-
     int current_bg_level = 0;
-    // Initial BG setup (will be updated by LevelUp check)
+
+    //Initial back ground setup
     bg_s.setTexture(Assets::bg_t);
     tile_s.setTexture(Assets::tile_t);
 
     //==================Music Setup======================
     Assets::level_music.setLoop(true);
     Assets::boss_music.setLoop(true);
-
-    while (window.isOpen())
-    {
-        window.clear(Color::Black); // Move clear to the top!
+    while (window.isOpen()){
+        window.clear(Color::Black);
         float deltaTime = time.restart().asSeconds();
         //plays animation at 1fps of the start screen
         if (manager.get_start_screen()) {
@@ -233,7 +230,7 @@ int main(){
                 Inputhandle(ev, manager, window, p1, p2, active_projectiles, projectile_count);
             }
         }
-        //HUD update (drawing moved to end)
+        //HUD update
         hud.update(p1.get_score(), p1.getHP(), p1.get_gemCount(), 
                    p2.get_score(), p2.getHP(), p2.get_gemCount(), 
                    current_bg_level, 10, "", 0, 100);
@@ -249,14 +246,12 @@ int main(){
                 p1.right_facing = true;
             }
 
-            // Check for Game Over
+            //chwcks for gameover
             if (p1.getHP() <= 0 && p2.getHP() <= 0) {
                 manager.set_play(false);
                 manager.set_lose(true);
                 gameOverScreen.setData(p1.get_score() + p2.get_score(), current_bg_level);
             }
-
-
             if (Keyboard::isKeyPressed(Keyboard::Num4)) {
                 p_move(p2, -p2.get_speed(), deltaTime, true);
                 p2.right_facing = false;
@@ -333,7 +328,15 @@ int main(){
             for (int i = 0; i < enemy_count; i++) {//updates each enemy
                 if (active_enemies[i] != nullptr) {//check if the enemy even exists
                     active_enemies[i]->update(deltaTime);//updates that enemy's logic
-                    
+
+                    if (active_enemies[i]->hasSpawnRequest && enemy_count < max_enemies) {
+                        Enemy* spawnedEnemy = EnemyFactory::e(active_enemies[i]->spawnType, active_enemies[i]->spawnX, active_enemies[i]->spawnY);
+                        if (spawnedEnemy != nullptr) {
+                            active_enemies[enemy_count++] = spawnedEnemy;
+                        }
+                        active_enemies[i]->hasSpawnRequest = false;
+                    }
+
                     //Kicking logic
                     if (active_enemies[i]->get_encased() && !active_enemies[i]->get_rolling()) {
                         if (p1.get_hitbox().intersects(active_enemies[i]->getHitbox())) {
@@ -363,7 +366,7 @@ int main(){
                     //Check for collisions with enemies
                     for (int j = 0; j < enemy_count; j++) {
                         if (active_enemies[j] != nullptr) {
-                            FloatRect ballHitbox(active_projectiles[i]->getX(), active_projectiles[i]->getY(), 16, 16);
+                            FloatRect ballHitbox = active_projectiles[i]->getHitbox();
                             FloatRect enemyHitbox = active_enemies[j]->getHitbox();
                             if (ballHitbox.intersects(enemyHitbox)) {
                                 active_enemies[j]->hit();
@@ -372,7 +375,7 @@ int main(){
                             }
                         }
                     }
-                    if ((active_projectiles[i]->getX() < 0) || (active_projectiles[i]->getX() > 800) || (!active_projectiles[i]->getisactive())) {
+                    if (!active_projectiles[i]->getisactive()) {
                         //remove if out of bounds or inactive
                         delete active_projectiles[i];//free memory
                         for (int j = i; j < projectile_count - 1; j++) {//shift remaining projectiles down in array
@@ -386,20 +389,21 @@ int main(){
             //Snowball roll logic
             for (int i = 0; i < enemy_count; i++) {
                 if ((active_enemies[i] != nullptr) && (active_enemies[i]->get_rolling())) {
-                    FloatRect Hitbox_SnowBall(active_enemies[i]->getx(), active_enemies[i]->gety(), 40, 40);
+                    FloatRect Hitbox_SnowBall = active_enemies[i]->getHitbox();
                     for (int j = 0; j < enemy_count; j++) {
                         if ((i == j) || (active_enemies[j] == nullptr)) {
                             continue;
                         }
                         FloatRect Hitbox_target = active_enemies[j]->getHitbox();
                         if (Hitbox_SnowBall.intersects(Hitbox_target)) {
-                            active_enemies[j]->kill(); 
+                            active_enemies[j]->kill();
+                            active_enemies[i]->grow_rolling();
                         }
                     }
                 }
             }
 
-            // Check for Level Clear
+            //level clear check
             if (enemy_count == 0 && manager.get_play() && !manager.get_next_level() && !manager.get_boss()) {
                 manager.set_play(false);
                 manager.set_win(true);
@@ -423,15 +427,15 @@ int main(){
                 if (Assets::tile_t.loadFromFile(new_tile)) {//if new tile loads, sets it as the new sprite for tile_s
                     tile_s.setTexture(Assets::tile_t, true); // true to reset texture rect
                 }
-                // Music handling for Bosses
+                //music handling for bosses
                 if (manager.get_boss()) {
                     Assets::level_music.stop();
                     Assets::boss_music.play();
                 }
-                
-                // Spawn enemies from level data
+
+                //file read to spawn mobs
                 level* current_lvl = manager.get_current_level();
-                if (current_lvl != nullptr && current_lvl->num_enemies > 0) {
+                if ((current_lvl != nullptr) && (current_lvl->num_enemies > 0)) {
                     for (int i = 0; i < current_lvl->num_enemies; i++) {
                         enemy_spawn es = current_lvl->enemies[i];
                         active_enemies[enemy_count++] = EnemyFactory::e(es.type, es.x, es.y);
@@ -439,8 +443,7 @@ int main(){
                 }
             }
         }
-        
-        // --- FINAL DRAWING PHASE ---
+        //=======All Draws======
         if (manager.get_start_screen()) {
             window.draw(start_s);
         }
@@ -456,7 +459,7 @@ int main(){
         else if (manager.get_win()) {
             levelCompleteScreen.draw(window);
             levelCompleteScreen.handleInput(ev, window);
-            if (levelCompleteScreen.getChoice() == 1) { // Next Level
+            if (levelCompleteScreen.getChoice() == 1) {//next level
                 manager.set_win(false);
                 manager.set_play(true);
                 manager.set_next_level(true);
@@ -465,10 +468,9 @@ int main(){
         else if (manager.get_lose()) {
             gameOverScreen.draw(window);
             gameOverScreen.handleInput(ev, window);
-            if (gameOverScreen.getChoice() == 1) { //Retry
+            if (gameOverScreen.getChoice() == 1) {//Retry
                 manager.set_lose(false);
                 manager.set_play(true);
-                //logic to reset players/level
             }
         }
 
@@ -505,6 +507,18 @@ int main(){
             if (manager.get_current_level() != nullptr) {
                 debug_view(manager, p1.get_hitbox(), manager.get_current_level()->platforms, manager.get_current_level()->num_platforms, window);
                 debug_view(manager, p2.get_hitbox(), manager.get_current_level()->platforms, 0, window);
+                if (manager.get_debug()) {
+                    for (int i = 0; i < enemy_count; i++) {
+                        if (active_enemies[i] != nullptr) {
+                            draw_debug_box(window, active_enemies[i]->getHitbox(), Color::Red);
+                        }
+                    }
+                    for (int i = 0; i < projectile_count; i++) {
+                        if (active_projectiles[i] != nullptr) {
+                            draw_debug_box(window, active_projectiles[i]->getHitbox(), Color::Yellow);
+                        }
+                    }
+                }
             }
             //lose screen
             if (manager.get_lose()) {

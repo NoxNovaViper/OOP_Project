@@ -4,7 +4,7 @@
 Mogera::Mogera(float startX, float startY) {
     x = startX;
     y = startY;
-    hp = 15; // Mid-game boss HP
+    hp = 15; //Mid-game boss HP
     speed = 50.0f;
     movingRight = true;
     isencased = false;
@@ -13,33 +13,31 @@ Mogera::Mogera(float startX, float startY) {
 }
 
 void Mogera::update(float deltaTime) {
-    if (isencased) return;
-    
-    // Simple side-to-side movement for the boss
-    if (movingRight) {
-        x += speed * deltaTime;
-        if (x > 700) movingRight = false;
-    } else {
-        x -= speed * deltaTime;
-        if (x < 0) movingRight = true;
+    if (Rolling) {
+        x += Roll_speed * deltaTime;
+        if (x < 0) x = 800;
+        if (x > 800) x = 0;
+        return;
     }
-
-    // Apply gravity — boss floor is lower to fit the 100px sprite
+    if (update_snow_state(deltaTime)) return;
+    //gravity
     bool was_grounded = on_ground;
-    applyGravity(deltaTime, 450.0f);
-    // When Mogera lands, give it a bounce-jump
+    applyGravity(deltaTime, 400.0f);
+    // When Mogera lands, give it a bouncejump
     if (!was_grounded && on_ground) {
         vy = -280.0f;
     }
-
-    // Spawn logic
+    //Spawn logic
     spawnTimer += deltaTime;
-    if (spawnTimer >= 3.0f) { // Spawn a child every 3 seconds
+    if (spawnTimer >= 3.0f) { //Spawns a child every 3 seconds
         spawnTimer = 0.0f;
         hasSpawnRequest = true;
         spawnType = "MogeraChild";
         spawnX = x + 40.0f; // Center horizontally
-        spawnY = y + 50.0f;
+        spawnY = y + 80.0f;
+        if (spawnY > 480.0f) {
+            spawnY = 480.0f;
+        }
     }
 }
 void Mogera::draw(sf::RenderWindow& window) {
@@ -50,8 +48,8 @@ void Mogera::draw(sf::RenderWindow& window) {
     enemySprite.setPosition(x, y);
     enemySprite.setScale(100.0f / frameSize, 100.0f / frameSize);
     window.draw(enemySprite);
+    drawSnowOverlay(window, 100.0f, 100.0f);
 }
 void Mogera::hit() {
-    hp--;
-    if (hp <= 0) isencased = true;
+    add_snow(10);
 }

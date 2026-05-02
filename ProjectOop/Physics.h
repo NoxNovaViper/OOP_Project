@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <cmath>
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include "Player.h"
@@ -18,10 +19,13 @@ public:
 	float dx;
 	float max_x;
 	float dir;
+	float distanceTraveled;
+	float maxDistance;
 	CircleShape ball;
 	void update(float time) override;
 	snow(Player& p);
 	void draw(sf::RenderWindow& window) override;
+	sf::FloatRect getHitbox() const override;
 	~snow();
 };
 void jump(Player& p);
@@ -32,4 +36,5 @@ void Position_change(Player& p, bool vertical, float v, float t, bool horizontal
 bool collision_check(FloatRect Player_hitbox, FloatRect platform_hitbox);
 void Fix_collision(Player& p, float platform_top);
 void debug_view(Level_Manager& manager, FloatRect Player_hitbox, platform* platforms, int num_platforms, RenderWindow& window);
+void draw_debug_box(RenderWindow& window, FloatRect hitbox, Color color);
 void Gravity(Player& p, float g, float t);

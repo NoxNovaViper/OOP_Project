@@ -13,9 +13,9 @@ struct platform {
 	FloatRect collison;
 };
 struct enemy_spawn {
-	string type;
-	float x;
-	float y;
+	string type;//Enemy name
+	float x;//enemy x pos
+	float y;//enemy y pos
 };
 struct state{
 	bool start_screen;

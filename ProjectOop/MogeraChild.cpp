@@ -13,17 +13,18 @@ MogeraChild::MogeraChild(float startX, float startY) {
 }
 
 void MogeraChild::update(float deltaTime) {
-    if (isencased || Rolling) {
-        if (Rolling) {
-            x += Roll_speed * deltaTime;
-            if (x < 0) x = 800;
-            if (x > 800) x = 0;
-        }
+    if (Rolling) {
+        x += Roll_speed * deltaTime;
+        if (x < 0) x = 800;
+        if (x > 800) x = 0;
+        return;
+    }
+    if (update_snow_state(deltaTime)) {
         return;
     }
 
     // Moves in one direction until it hits a wall
-    x += directionX * speed * deltaTime;
+    x += directionX * speed * snow_speed_multiplier() * deltaTime;
     
     // Bounce off walls
     if (x <= 0) {
@@ -46,16 +47,14 @@ void MogeraChild::draw(sf::RenderWindow& window) {
     s.setTextureRect(sf::IntRect(0, 0, frameSize, frameSize));
     s.setPosition(x, y);
     // Smaller sprite
-    s.setScale(48.0f / frameSize, 48.0f / frameSize);
+    s.setScale(20.0f / frameSize, 20.0f / frameSize);
     
     // Color it differently so the player knows it's a child
     s.setColor(sf::Color(255, 100, 100)); 
     window.draw(s);
+    drawSnowOverlay(window, 20.0f, 20.0f);
 }
 
 void MogeraChild::hit() {
-    hp--;
-    if (hp <= 0) {
-        isencased = true;
-    }
+    add_snow(50);
 }

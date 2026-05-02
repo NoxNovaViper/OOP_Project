@@ -11,6 +11,9 @@ public:
     virtual void update(float deltaTime) = 0;
     virtual void draw(sf::RenderWindow& window) = 0;
     virtual ~Projectile() {}
+    virtual sf::FloatRect getHitbox() const {
+        return sf::FloatRect(x, y, 16.0f, 16.0f);
+    }
 
     bool getisactive() const {
         return isactive;

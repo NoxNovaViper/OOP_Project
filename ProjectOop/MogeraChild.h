@@ -1,7 +1,8 @@
 #pragma once
 #include "Enemy.h"
 #include <SFML/Graphics.hpp>
-
+using namespace std;
+using namespace sf;
 class MogeraChild : public Enemy {
 private:
     float vy;
@@ -13,7 +14,8 @@ public:
     void update(float deltaTime) override;
     void draw(sf::RenderWindow& window) override;
     void hit() override;
-    sf::FloatRect getHitbox() const override {
-        return sf::FloatRect(x, y, 20.0f, 20.0f);
+    FloatRect getHitbox() const override {
+        float size = get_rolling() ? 20.0f * get_roll_scale() : 20.0f;
+        return FloatRect(x, y, size, size);//child hitbox defined
     }
 };

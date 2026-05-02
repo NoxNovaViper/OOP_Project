@@ -2,9 +2,9 @@
 int snow::count = 0;
 
 void snow::update(float time) {
-	dy += gravity * time;
-	x += dx * time * dir;
-	y += dy * time;
+	float move = dx * time * dir;
+	x += move;
+	distanceTraveled += std::abs(move);
 
 	if (x < 0) {
 		x = 800;
@@ -12,7 +12,7 @@ void snow::update(float time) {
 	if (x > 800) {
 		x = 0;
 	}
-	if (y > 600) {
+	if (distanceTraveled >= maxDistance) {
 		isactive = false;
 	}
 }
@@ -27,19 +27,24 @@ snow::snow(Player& p) {
 		dir = -1;
 	}
 	y = p.get_y() + 15;
-	dy = -250.0f; 
+	dy = 0.0f; 
 	dx = 300.0f; 
+	distanceTraveled = 0.0f;
+	maxDistance = p.get_snowballDistance();
 	isactive = true;
 	ball.setRadius(5);
 	ball.setFillColor(Color::White);
-	snow::count++; // Increment static count
+	snow::count++;
 }
 snow::~snow() {
-	snow::count--; // Decrement static count
+	snow::count--;
 }
 void snow::draw(RenderWindow& window) {
 	ball.setPosition(x, y);
 	window.draw(ball);
+}
+sf::FloatRect snow::getHitbox() const {
+	return sf::FloatRect(x, y, 10.0f, 10.0f);
 }
 
 void jump(Player& p) {
@@ -56,7 +61,7 @@ void p_move(Player& p, float speed, float t, bool horizontal) {
 	Position_change(p, false, speed, t, horizontal);
 }
 void attack(Player& p, Projectile** projectiles, int& projectile_count) {
-	if (snow::count < 30) { // Use static count for limit
+	if (projectile_count < 30 && snow::count < 30) { // Use static count for limit
 		projectiles[projectile_count] = new snow(p);
 		projectile_count++;
 	}
@@ -95,20 +100,19 @@ void Fix_collision(Player& p, float platform_top) {
 }
 void debug_view(Level_Manager& manager,FloatRect Player_hitbox, platform* platforms, int num_platforms, RenderWindow& window) {
 	if (manager.get_debug()) {
-		RectangleShape debugBox;
-		// Green for player hitbox
-		debugBox.setPosition(Player_hitbox.left, Player_hitbox.top);
-		debugBox.setSize(sf::Vector2f(Player_hitbox.width, Player_hitbox.height));
-		debugBox.setOutlineColor(sf::Color::Green);
-		debugBox.setOutlineThickness(2);
-		debugBox.setFillColor(sf::Color::Transparent);
-		window.draw(debugBox);
+		draw_debug_box(window, Player_hitbox, sf::Color::Green);
 		//Platform colored outline blue
-		debugBox.setOutlineColor(sf::Color::Blue);
 		for (int i = 0; i < num_platforms; i++) {
-			debugBox.setPosition(platforms[i].x, platforms[i].y);
-			debugBox.setSize(sf::Vector2f(platforms[i].w, platforms[i].h));
-			window.draw(debugBox);
+			draw_debug_box(window, platforms[i].collison, sf::Color::Blue);
 		}
 	}
+}
+void draw_debug_box(RenderWindow& window, FloatRect hitbox, Color color) {
+	RectangleShape debugBox;
+	debugBox.setPosition(hitbox.left, hitbox.top);
+	debugBox.setSize(sf::Vector2f(hitbox.width, hitbox.height));
+	debugBox.setOutlineColor(color);
+	debugBox.setOutlineThickness(2);
+	debugBox.setFillColor(sf::Color::Transparent);
+	window.draw(debugBox);
 }

@@ -13,6 +13,7 @@ public:
     void draw(sf::RenderWindow& window) override;
     void hit() override;
     sf::FloatRect getHitbox() const override {
-        return sf::FloatRect(x, y, 100.0f, 100.0f);
+        float size = get_rolling() ? 100.0f * get_roll_scale() : 100.0f;
+        return sf::FloatRect(x, y, size, size);
     }
 };

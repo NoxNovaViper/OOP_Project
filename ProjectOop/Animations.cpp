@@ -45,11 +45,11 @@ void update_animations(Player& p, float Time, bool left, bool right) {
 
     if (!p.get_on_ground()) {
         if (p.get_vy() < 0) {
-            // Jump
+            //jump
             int frame = p.get_cur_frame() % 6;
             p.get_sprite().setTexture(Assets::jump[frame], true);
         } else {
-            // Fall
+            //fall
             p.get_sprite().setTexture(Assets::fall[0], true);
         }
     } else if (moving) {
@@ -57,7 +57,7 @@ void update_animations(Player& p, float Time, bool left, bool right) {
         int frame = p.get_cur_frame() % 4;
         p.get_sprite().setTexture(Assets::walk[frame], true);
     } else {
-        // Idle
+        //idle
         p.get_sprite().setTexture(Assets::idle, true);
     }
 
@@ -65,7 +65,7 @@ void update_animations(Player& p, float Time, bool left, bool right) {
 	float h = 48.0f;
     float scaleX, scaleY;
     
-    // Safety check in case texture isn't bound properly
+    //bound safety check
     if (p.get_sprite().getTexture() != nullptr) {
 	    scaleX = w / p.get_sprite().getTexture()->getSize().x;
 	    scaleY = h / p.get_sprite().getTexture()->getSize().y;
@@ -79,7 +79,6 @@ void update_animations(Player& p, float Time, bool left, bool right) {
 	} else {
 		p.get_sprite().setScale(scaleX, scaleY);
 	}
-	// Center 48x48 sprite on 30x50 hitbox
-	// Hitbox top-left is (x, y). Hitbox center is (x+15, y+25).
+	//sprite hitbox centering
 	p.get_sprite().setPosition(p.get_x() + 15.0f, p.get_y() + 25.0f);
 }

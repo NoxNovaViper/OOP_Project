@@ -9,8 +9,9 @@ private:
     float distanceCovered;
     bool isRolling;
     int chainCount;
-    float lifetime;   // seconds alive
-    float vy;         // vertical velocity for arc tracking
+
+    float lifetime;//duration of existence
+    float vy;//arc vertical
 
 public:
     CircleShape ball;

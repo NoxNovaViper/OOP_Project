@@ -15,35 +15,52 @@ Gamakichi::Gamakichi(float startX, float startY)
 
 void Gamakichi::update(float deltaTime) {
     attackTimer += deltaTime;
-
-    // Gravity — boss floor offset for 100px sprite
+    //gravity
     bool was_grounded = on_ground;
-    applyGravity(deltaTime, 450.0f);
-    // Gamakichi hops when it lands
+    applyGravity(deltaTime, 400.0f);
+    //jump on landing
     if (!was_grounded && on_ground) {
         vy = -200.0f;
     }
-    
-    // Phase logic updates based on HP in hit()
+    //Phase logic updates based on HP in hit()
     if (phase == 1) {
-        if (right) { x += 100 * deltaTime; } else { x -= 100 * deltaTime; }
-        if (x > 700 || x < 0) right = !right;
+        if (right) { 
+            x += 100 * deltaTime;
+        } 
+        else { 
+            x -= 100 * deltaTime; 
+        }
+        if (x > 700 || x < 0) {
+            right = !right;
+        }
         
         if (attackTimer >= attackDuration) {
             attackTimer = 0;
             fireArtillery();
         }
     } else if (phase == 2) {
-        if (right) { x += 150 * deltaTime; } else { x -= 150 * deltaTime; }
-        if (x > 700 || x < 0) right = !right;
+        if (right) { 
+            x += 150 * deltaTime;
+        } else { 
+            x -= 150 * deltaTime;
+        }
+        if (x > 700 || x < 0) {
+            right = !right;
+        }
         
         if (attackTimer >= attackDuration) {
             attackTimer = 0;
             fireArtillery();
         }
     } else if (phase == 3) {
-        if (right) { x += 250 * deltaTime; } else { x -= 250 * deltaTime; }
-        if (x > 700 || x < 0) right = !right;
+        if (right) { 
+            x += 250 * deltaTime;
+        } else { 
+            x -= 250 * deltaTime;
+        }
+        if (x > 700 || x < 0) {
+            right = !right;
+        }
         
         if (attackTimer >= attackDuration) {
             attackTimer = 0;
@@ -68,28 +85,26 @@ void Gamakichi::draw(sf::RenderWindow& window) {
 }
 void Gamakichi::hit() {
      hp--;
-     
-     // Phase thresholds
+     //Phase thresholds
      if (hp <= 20 && phase == 1) {
           phase = 2;
-          attackDuration = 1.0f; // Attacks 2x as fast
-     } else if (hp <= 10 && phase == 2) {
-          phase = 3;
-          attackDuration = 0.5f; // Attacks 4x as fast
+          attackDuration = 1.0f; //Attacks 2x as fast
      }
-     
+     else if (hp <= 10 && phase == 2) {
+         phase = 3;
+         attackDuration = 0.5f; //Attacks 4x as fast
+     }
      if (hp <= 0)
         isdefeated = true;
 }
 void Gamakichi::phaseChange() {}
 void Gamakichi::fireArtillery() {
-    // Request a projectile spawn
+    //projectile spawn
     hasProjectileRequest = true;
     projectileType = "Artillery";
-    pX = x + 50.0f; // center
+    pX = x + 50.0f; //center
     pY = y;
-    
-    // Fire randomly either left or right arc
-    pVy = -400.0f; // shoot up
+    //Fires randomly either left or right arc
+    pVy = -400.0f; //shoots up
     pVx = (rand() % 2 == 0) ? 200.0f : -200.0f;
 }

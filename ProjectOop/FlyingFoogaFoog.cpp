@@ -13,33 +13,52 @@ FlyngFoogafoog::FlyngFoogafoog(float startX, float startY)
 }
 
 void FlyngFoogafoog::update(float deltaTime) {
-    if (isencased) return;
-
+    if (Rolling) {
+        Botom::update(deltaTime);
+        return;
+    }
+    if (update_snow_state(deltaTime)) {
+        return;
+    }
     flyTimer += deltaTime;
     if (!isFlying) {
-        // Ground behavior: Walk like a Botom
+        //Walk when grounded
         Botom::update(deltaTime);
         if (flyTimer >= groundDuration) {
             isFlying = true;
             flyTimer = 0.0f;
-            // Pick a random flying direction
-            speed_x = (rand() % 2 == 0) ? 120.0f : -120.0f;
-            speed_y = (rand() % 2 == 0) ? 80.0f : -80.0f;
+            //random fly dir
+            if (rand() % 2 == 0) {
+                speed_x = 120.0f;
+            }
+            else {
+                speed_x = -120.0f;
+            }
+            if (rand() % 2 == 0) {
+                speed_y = 80.0f;
+            }
+            else {
+                speed_y = -80.0f;
+            }
         }
     }
     else {
-        // Flight behavior: Move freely
-        x += speed_x * deltaTime;
-        y += speed_y * deltaTime;
+        //free flight, move over screen
+        x += speed_x * snow_speed_multiplier() * deltaTime;
+        y += speed_y * snow_speed_multiplier() * deltaTime;
 
-        // Bounce off screen edges
-        if (x < 10 || x > 780) speed_x = -speed_x;
-        if (y < 10 || y > 580) speed_y = -speed_y;
+        //Bounce off
+        if (x < 10 || x > 780) {
+            speed_x = -speed_x;
+        }
+        if (y < 10 || y > 580) {
+            speed_y = -speed_y;
+        }
 
         if (flyTimer >= flyDuration) {
             isFlying = false;
             flyTimer = 0.0f;
-            y = 300; // Reset to a middle ground level
+            y = 300; //rest at bottom
         }
     }
 }
@@ -51,8 +70,8 @@ void FlyngFoogafoog::draw(sf::RenderWindow& window) {
     enemySprite.setPosition(x, y);
     enemySprite.setScale(48.0f / frameSize, 48.0f / frameSize);
     window.draw(enemySprite);
+    drawSnowOverlay(window, 48.0f, 48.0f);
 }
 void FlyngFoogafoog::hit() {
-    hp--;
-    if (hp <= 0) isencased = true;
+    add_snow(25);
 }
