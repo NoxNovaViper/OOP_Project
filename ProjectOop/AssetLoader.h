@@ -12,8 +12,8 @@ public:
     static Texture run[4];
     static Texture jump[6];
     static Texture walk[4];
-    static Texture death[4];
-    static Texture push[4];
+    static Texture death[7];
+    static Texture push[3];
     static Texture idle;
     static Texture fall[1];
     //UI screen assets
@@ -22,13 +22,21 @@ public:
     //Level Assets
     static Texture bg_t;
     static Texture tile_t;
-    //Enemy Assets
+    //botom Assets
     static Texture botom_t;
-    static Texture flyng_t;
-    static Texture tornado_t;
-    static Texture flyng_anim[4];
-    static Texture tornado_anim[4];
-    static Texture knife_t;
+    //Tornado Assets
+    static Texture tornado_death_t[9];
+    static Texture tornado_run_t[3];
+    static Texture tornado_knife_t;
+    static Texture tornado_turn_t[2];
+    static Texture tornado_free_t[3];
+    static Texture tornado_idle_t;
+    //FFF assets
+    static Texture FFF_hit_t[3];
+    static Texture FFF_fall_t[3];
+    static Texture FFF_fly_t[3];
+
+
     static Texture snow_attack_t;
     static Texture mogera_t;
     static Texture gamakichi_t;
