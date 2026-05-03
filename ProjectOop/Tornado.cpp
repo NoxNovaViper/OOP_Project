@@ -35,9 +35,9 @@ void Tornado::draw(sf::RenderWindow& window) {
     sf::Sprite enemySprite;
     static sf::Clock animClock;
     int frame = static_cast<int>(animClock.getElapsedTime().asSeconds() / 0.1f) % 4;
-    const Texture* tex = &Assets::tornado_t;
-    if (Assets::tornado_anim[frame].getSize().x > 0 && Assets::tornado_anim[frame].getSize().y > 0) {
-        tex = &Assets::tornado_anim[frame];
+    const Texture* tex = &Assets::tornado_idle_t; 
+    if (frame < 3) {
+        tex = &Assets::tornado_run_t[frame]; 
     }
     if (tex->getSize().x == 0 || tex->getSize().y == 0) {
         return;

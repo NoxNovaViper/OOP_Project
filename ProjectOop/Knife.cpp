@@ -34,11 +34,11 @@ void Knife::update(float deltaTime) {
     }
 }
 void Knife::draw(sf::RenderWindow& window) {
-    if (Assets::knife_t.getSize().x > 0 && Assets::knife_t.getSize().y > 0) {
+    if (Assets::tornado_knife_t.getSize().x > 0 && Assets::tornado_knife_t.getSize().y > 0) {
         sf::Sprite knifeSprite;
-        knifeSprite.setTexture(Assets::knife_t);
+        knifeSprite.setTexture(Assets::tornado_knife_t);
         knifeSprite.setPosition(x, y);
-        knifeSprite.setScale(24.0f / Assets::knife_t.getSize().x, 12.0f / Assets::knife_t.getSize().y);
+        knifeSprite.setScale(24.0f / Assets::tornado_knife_t.getSize().x, 12.0f / Assets::tornado_knife_t.getSize().y);
         window.draw(knifeSprite);
     }
     else {

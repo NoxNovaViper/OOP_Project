@@ -62,9 +62,9 @@ void FlyngFoogafoog::draw(sf::RenderWindow& window) {
     sf::Sprite enemySprite;
     static sf::Clock animClock;
     int frame = static_cast<int>(animClock.getElapsedTime().asSeconds() / 0.12f) % 4;
-    const Texture* tex = &Assets::flyng_t;
-    if (Assets::flyng_anim[frame].getSize().x > 0 && Assets::flyng_anim[frame].getSize().y > 0) {
-        tex = &Assets::flyng_anim[frame];
+    const Texture* tex = &Assets::FFF_fly_t[0];
+    if (frame < 3) { 
+        tex = &Assets::FFF_fly_t[frame];
     }
     if (tex->getSize().x == 0 || tex->getSize().y == 0) {
         return;
