@@ -172,6 +172,7 @@
     <ClCompile Include="Mogera.cpp" />
     <ClCompile Include="Physics.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="shop.cpp" />
     <ClCompile Include="Snowball.cpp" />
     <ClCompile Include="Tornado.cpp" />
   </ItemGroup>
@@ -205,6 +206,7 @@
     <ClInclude Include="Physics.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Projectile.h" />
+    <ClInclude Include="shop.h" />
     <ClInclude Include="Snowball.h" />
     <ClInclude Include="Tornado.h" />
   </ItemGroup>

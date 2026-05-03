@@ -15,6 +15,7 @@ protected:
 	int gemdrop;
 	bool isencased;
 	float speed;
+	bool movingRight; // Added for direction control
 
 	//Gravity
 	float vy;
@@ -90,10 +91,7 @@ public:
 		}
 	}
 	//Gravity function
-	void applyGravity(float Time,  float f=490.0f) {
-		if (f < 0.0f) {
-			f = 550.0f - getHitbox().height;
-		}
+	void applyGravity(float Time, float f = 500.0f) {
 		vy += 600 * Time;
 		y += vy * Time;
 		if (y >= f) {
@@ -103,6 +101,28 @@ public:
 		}
 		else {
 			on_ground = false;
+		}
+	}
+	//Platform collision for enemies
+	void check_platform_collision(level* lvl) {
+		if (lvl == nullptr) return;
+		on_ground = false;
+		float enemy_bottom = y + getHitbox().height;
+		for (int i = 0; i < lvl->num_platforms; i++) {
+			platform pt = lvl->platforms[i];
+			if (vy >= 0 && getHitbox().intersects(pt.collison)) {
+				if (enemy_bottom - pt.y < 30.0f) {
+					y = pt.y - getHitbox().height;
+					vy = 0;
+					on_ground = true;
+					break;
+				}
+			}
+		}
+		if (y >= 500.0f) {
+			y = 500.0f;
+			vy = 0;
+			on_ground = true;
 		}
 	}
 	float snow_speed_multiplier() const {
@@ -128,6 +148,9 @@ public:
 	}
 	int getHP() const {
 		return hp;
+	}
+	virtual int get_max_hp() const {
+		return 1;
 	}
 	int get_gemdrop() const {
 		return gemdrop;

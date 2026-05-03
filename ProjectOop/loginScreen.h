@@ -51,8 +51,11 @@ public:
     void setup();
     void handleInput(Event& event, RenderWindow& window);
     void draw(RenderWindow& window);
-
-    bool getIsLoggedIn() { 
-        return isLoggedIn;}
+    void setTitle(string t) {
+        titleText.setString(t);
+    }
+    bool getIsLoggedIn() {
+        return isLoggedIn;
+    }
     string getLoggedInUsername() { return auth.getLoggedInUser(); }
 };

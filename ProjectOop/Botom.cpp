@@ -14,6 +14,7 @@ Botom::Botom(float startX, float startY) {
 void Botom::update(float deltaTime) {
     if (Rolling) {
         x += Roll_speed * deltaTime;
+        applyGravity(deltaTime);
         if ((x <= 0) || (x + getHitbox().width >= 800)) {
             kill();
         }

@@ -6,11 +6,11 @@ GameOverScreen::GameOverScreen() {
 }
 
 void GameOverScreen::setup() {
-    const Font& mainFont = font;
-    bgSp.setTexture(Assets::start_t1); // Using start screen as placeholder bg
+    const Font& mainFont = Assets::font;
+    bgSp.setTexture(Assets::lose_t); 
     bgSp.setScale(
-        800.0f / Assets::start_t1.getSize().x,
-        600.0f / Assets::start_t1.getSize().y);
+        800.0f / Assets::lose_t.getSize().x,
+        600.0f / Assets::lose_t.getSize().y);
     titleText.setFont(mainFont);
     titleText.setString("Game Over");
     titleText.setCharacterSize(55);
@@ -30,7 +30,7 @@ void GameOverScreen::setup() {
     retryBtn.setSize(Vector2f(200, 50));
     retryBtn.setFillColor(Color(0, 150, 200));
     retryBtn.setPosition(180, 380);
-    retryBtnText.setFont(font);
+    retryBtnText.setFont(Assets::font);
     retryBtnText.setString("Retry");
     retryBtnText.setCharacterSize(24);
     retryBtnText.setFillColor(Color::White);
@@ -39,7 +39,7 @@ void GameOverScreen::setup() {
     menuBtn.setSize(Vector2f(200, 50));
     menuBtn.setFillColor(Color(0, 150, 200));
     menuBtn.setPosition(420, 380);
-    menuBtnText.setFont(font);
+    menuBtnText.setFont(Assets::font);
     menuBtnText.setString("Main Menu");
     menuBtnText.setCharacterSize(24);
     menuBtnText.setFillColor(Color::White);

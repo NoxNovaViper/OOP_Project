@@ -7,10 +7,8 @@ HUD::HUD(bool singlePlayer) {
 }
 
 void HUD::setup() {
-    // Use the centralized font from Assets
     const Font& mainFont = Assets::font;
-    
-    // player 1 on top left
+
     p1ScoreText.setFont(mainFont);
     p1ScoreText.setCharacterSize(20);
     p1ScoreText.setFillColor(Color::White);
@@ -23,10 +21,9 @@ void HUD::setup() {
 
     p1GemsText.setFont(mainFont);
     p1GemsText.setCharacterSize(20);
-    p1GemsText.setFillColor(Color::Yellow);
+    p1GemsText.setFillColor(Color::White);
     p1GemsText.setPosition(10, 60);
 
-    // player 2 on  top right
     p2ScoreText.setFont(mainFont);
     p2ScoreText.setCharacterSize(20);
     p2ScoreText.setFillColor(Color::White);
@@ -39,39 +36,33 @@ void HUD::setup() {
 
     p2GemsText.setFont(mainFont);
     p2GemsText.setCharacterSize(20);
-    p2GemsText.setFillColor(Color::Yellow);
+    p2GemsText.setFillColor(Color::White);
     p2GemsText.setPosition(600, 60);
 
-    // level at top center
     levelText.setFont(mainFont);
     levelText.setCharacterSize(22);
     levelText.setFillColor(Color::White);
     levelText.setPosition(340, 10);
 
-    // powerup bottom
     powerupText.setFont(mainFont);
     powerupText.setCharacterSize(18);
-    powerupText.setFillColor(Color::Cyan);
+    powerupText.setFillColor(Color::White);
     powerupText.setPosition(10, 560);
 
-    // boss health bar background
-    bossHealthBg.setSize(Vector2f(400, 25));
-    bossHealthBg.setFillColor(Color(100, 0, 0));
-    bossHealthBg.setPosition(200, 40);
-
-    // boss health bar fill
-    bossHealthBar.setSize(Vector2f(400, 25));
-    bossHealthBar.setFillColor(Color::Red);
-    bossHealthBar.setPosition(200, 40);
-
-    // boss text
     bossHealthText.setFont(mainFont);
     bossHealthText.setCharacterSize(16);
     bossHealthText.setFillColor(Color::White);
     bossHealthText.setPosition(370, 44);
     bossHealthText.setString("BOSS");
-}
 
+    bossHealthBg.setSize(Vector2f(400, 25));
+    bossHealthBg.setFillColor(Color(100, 0, 0));
+    bossHealthBg.setPosition(200, 40);
+
+    bossHealthBar.setSize(Vector2f(400, 25));
+    bossHealthBar.setFillColor(Color::Red);
+    bossHealthBar.setPosition(200, 40);
+}
 void HUD::update(int p1Score, int p1Lives, int p1Gems, int p2Score, int p2Lives, int p2Gems, int level, int totalLevels,
     string powerup,
     int bossHealth, int bossMaxHealth) {

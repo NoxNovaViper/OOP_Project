@@ -1,15 +1,13 @@
-
 #include "PauseMenu.h"
-
 PauseMenu::PauseMenu() {
     choice = 0;
     isOpen = false;
 }
 
 void PauseMenu::setup() {
-    font.loadFromFile("SnowBrosAssets\Fonts\Starborn.ttf");
+    font.loadFromFile("Starborn.ttf");
 
-    bgTx.loadFromFile("SnowBrosAssets\Start\UIbg.png");
+    bgTx.loadFromFile("BG.png");
     bgSp.setTexture(bgTx);
     bgSp.setScale(
         800.0f / bgTx.getSize().x,
@@ -19,7 +17,7 @@ void PauseMenu::setup() {
     titleText.setFont(font);
     titleText.setString("Paused");
     titleText.setCharacterSize(36);
-    titleText.setFillColor(Color::Black);
+    titleText.setFillColor(Color::White);
     titleText.setPosition(340, 115);
 
     // resume
@@ -77,7 +75,9 @@ void PauseMenu::handleInput(Event& event, RenderWindow& window) {
     if (!isOpen) return;
 
     if (event.type == Event::MouseButtonPressed) {
-        Vector2f mousePos(event.mouseButton.x, event.mouseButton.y);
+        Vector2f mousePos = window.mapPixelToCoords(
+            Vector2i(event.mouseButton.x, event.mouseButton.y)
+        );
 
         if (resumeBtn.getGlobalBounds().contains(mousePos))
         {

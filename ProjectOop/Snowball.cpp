@@ -50,10 +50,18 @@ void Snowball::update(float Time) {
     }
 }
 void Snowball::draw(RenderWindow& w) {
-    ball.setRadius(16);
-    ball.setPosition(x, y);
-    ball.setFillColor(Color::Cyan);
-    w.draw(ball);
+    if (Assets::snow_attack_t.getSize().x > 0) {
+        sf::Sprite s;
+        s.setTexture(Assets::snow_attack_t);
+        s.setPosition(x, y);
+        s.setScale(32.0f / Assets::snow_attack_t.getSize().x, 32.0f / Assets::snow_attack_t.getSize().y);
+        w.draw(s);
+    } else {
+        ball.setRadius(16);
+        ball.setPosition(x, y);
+        ball.setFillColor(Color::Cyan);
+        w.draw(ball);
+    }
 }
 
 void Snowball::startRolling() {

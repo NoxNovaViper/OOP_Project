@@ -16,6 +16,7 @@ MogeraChild::MogeraChild(float startX, float startY) {
 void MogeraChild::update(float deltaTime) {
     if (Rolling) {
         x += Roll_speed * deltaTime;
+        applyGravity(deltaTime);
         if ((x <= 0) || (x + getHitbox().width >= 800)) {
             kill();
         }
@@ -25,16 +26,12 @@ void MogeraChild::update(float deltaTime) {
         return;
     }
 
-    // Moves in one direction until it hits a wall
+    // Moves in one direction until it hits a wall or the player
     x += directionX * speed * snow_speed_multiplier() * deltaTime;
     
-    // Bounce off walls
-    if (x <= 0) {
-        x = 0;
-        directionX = 1.0f;
-    } else if (x >= 752) { // 800 - 48 sprite width
-        x = 752;
-        directionX = -1.0f;
+    // Deactivate if hits wall instead of bouncing
+    if (x <= 0 || x >= 752) {
+        kill();
     }
 
     // Use shared gravity from base class

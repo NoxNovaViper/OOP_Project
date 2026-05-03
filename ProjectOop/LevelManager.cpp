@@ -48,6 +48,23 @@ Level_Maker::~Level_Maker() {
 	}
 }
 Level_Manager::Level_Manager() {
+	//  Initialize state FIRST before anything can return early
+	total_levels = 0;
+	level_data = nullptr;
+	s.start_screen = true;
+	s.login = false;
+	s.character_select = false;
+	s.play = false;
+	s.pause = false;
+	s.boss = false;
+	s.mobs = false;
+	s.transition = false;
+	s.win = false;
+	s.lose = false;
+	s.debug = false;
+	s.next_level = false;
+	s.main_menu = false;
+	s.login2 = false;
 	ifstream file("levels.txt");//stores the names of the files levels such as lev1.txt etc
 	if (!file.is_open()) {
 		cout << "File could not be opened" << endl;
@@ -81,6 +98,7 @@ Level_Manager::Level_Manager() {
 	s.character_select = false;
 	s.play = false;
 	s.pause = false;
+	s.shop = false;
 	s.boss = false;
 	s.mobs = false;
 	s.transition = false;
@@ -88,7 +106,10 @@ Level_Manager::Level_Manager() {
 	s.lose = false;
 	s.debug = false;
 	s.next_level = false;
+	s.main_menu = false;
 }
+void Level_Manager::set_login2(bool v) { s.login2 = v; }
+bool Level_Manager::get_login2() { return s.login2; }
 void Level_Manager::next_level() {
 	static int cur = -1;//current level
 	cur += 1;//update level
@@ -129,11 +150,13 @@ void Level_Manager::next_level() {
 				}
 			}
 			levels.create_level(c, next_p, e_count, next_e);//level makercreates new level
-		} else {
+		}
+		else {
 			levels.create_level(c, next_p, 0, nullptr);//fallback if no enemies in file
 		}
 
 		//play transition jump animation sound etc
+
 		s.transition = false;//Transitioning to next level
 		s.play = true;//player movement allowed
 	}
@@ -183,6 +206,12 @@ void Level_Manager::set_next_level(bool next_level) {
 void Level_Manager::set_main_menu(bool m) {
 	s.main_menu = m;
 }
+void Level_Manager::set_shop(bool sh) {
+	s.shop = sh;
+}
+bool Level_Manager::get_shop() {
+	return s.shop;
+}
 bool Level_Manager::get_start_screen() {
 	return s.start_screen;
 }
@@ -224,10 +253,10 @@ bool Level_Manager::get_main_menu() {
 }
 
 // In Level_Maker
-level* Level_Maker::get_level() { 
+level* Level_Maker::get_level() {
 	return l;
 }
 // In Level_Manager
-level* Level_Manager::get_current_level() { 
+level* Level_Manager::get_current_level() {
 	return levels.get_level();
 }

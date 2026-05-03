@@ -9,6 +9,8 @@ protected:
     bool isdefeated;
     int gemReward;
     bool right;
+
+
 public:
     Boss(float startX, float startY);
     virtual void update(float deltaTime) = 0;

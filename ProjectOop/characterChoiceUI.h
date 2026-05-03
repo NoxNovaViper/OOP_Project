@@ -39,7 +39,7 @@ private:
 
 public:
     CharacterSelect();
-    void setup(int playerNumber);  
+    void setup(int playerNumber);
     void handleInput(Event& event, RenderWindow& window);
     void draw(RenderWindow& window);
 

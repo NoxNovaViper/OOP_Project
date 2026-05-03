@@ -4,12 +4,12 @@
 void load_assets(Player& p) {
     float w = 48.0f;
     float h = 48.0f;
-	p.get_sprite().setTexture(Assets::idle, true);
+	p.get_sprite().setTexture(Assets::idle[0], true);
 	p.get_sprite().setScale(
-		w / Assets::idle.getSize().x,
-		h / Assets::idle.getSize().y
+		w / Assets::idle[0].getSize().x,
+		h / Assets::idle[0].getSize().y
 	);
-	p.get_sprite().setOrigin(Assets::idle.getSize().x / 2.0f, Assets::idle.getSize().y / 2.0f);
+	p.get_sprite().setOrigin(Assets::idle[0].getSize().x / 2.0f, Assets::idle[0].getSize().y / 2.0f);
 }
 void update_animations(Player& p, float Time, bool left, bool right) {
 	static float timers[3] = {0, 0, 0};//
@@ -36,6 +36,13 @@ void update_animations(Player& p, float Time, bool left, bool right) {
 		if (timers[p_num] >= dura) {
 			timers[p_num] = 0;
 			p.set_cur_frame((p.get_cur_frame() + 1) % Frames);
+		}
+	} else if (p.get_on_ground()) {
+        // idle animation
+		timers[p_num] += Time;
+		if (timers[p_num] >= dura * 2.0f) {
+			timers[p_num] = 0;
+			p.set_cur_frame((p.get_cur_frame() + 1) % 2);
 		}
 	} else {
 		timers[p_num] = 0;
@@ -72,7 +79,8 @@ void update_animations(Player& p, float Time, bool left, bool right) {
         p.get_sprite().setTexture(Assets::walk[frame], true);
     } else {
         //idle
-        p.get_sprite().setTexture(Assets::idle, true);
+        int frame = p.get_cur_frame() % 2;
+        p.get_sprite().setTexture(Assets::idle[frame], true);
     }
 
 	float w = 48.0f;

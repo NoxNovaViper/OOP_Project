@@ -1,13 +1,17 @@
-#pragma once
-#include "Enemy.h"
+#include "Boss.h"
 #include <SFML/Graphics.hpp>
-
-class Mogera : public Enemy {
+using namespace std;
+using namespace sf;
+class Mogera : public Boss {
 private:
     bool movingRight;
     float spawnTimer;
 
 public:
+    void child_throw();
+    void jump();
+    void fall();
+    void phaseChange() override;
     Mogera(float startX, float startY);
     void update(float deltaTime) override;
     void draw(sf::RenderWindow& window) override;

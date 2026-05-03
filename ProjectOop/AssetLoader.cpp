@@ -9,7 +9,7 @@ Texture Assets::walk[4];
 Texture Assets::jump[6];
 Texture Assets::death[7];
 Texture Assets::push[3];
-Texture Assets::idle;
+Texture Assets::idle[2];
 Texture Assets::fall[1];
 Texture Assets::start_t1;
 Texture Assets::start_t2;
@@ -31,16 +31,32 @@ Texture Assets::FFF_fall_t[3];
 Texture Assets::FFF_fly_t[3];
 
 Texture Assets::snow_attack_t;
+Texture Assets::snow_explode[4];
+Texture Assets::snow_frost[4];
+Texture Assets::snow_power_roll[4];
+Texture Assets::snow_roll[4];
+
+Texture Assets::sushi[5];
+Texture Assets::money_t;
+
 Texture Assets::mogera_t;
+Texture Assets::mogera_dead_t;
+Texture Assets::mogera_flying_t;
+Texture Assets::mogera_legs[2];
+
 Texture Assets::gamakichi_t;
+Texture Assets::gamakichi_arms[2];
+Texture Assets::gamakichi_rocket_t;
+Texture Assets::gamakichi_rocket_encased_t;
 
 Font Assets::font;
 Music Assets::level_music;
 Music Assets::boss_music;
+Music Assets::theme[2];
 bool Assets::loadAll() {
-    start_t1.loadFromFile("SnowBrosAssets/start/start1.png");
-    start_t2.loadFromFile("SnowBrosAssets/start/start2.png");
-    lose_t.loadFromFile("SnowBrosAssets/start/lose1.png");
+    start_t1.loadFromFile("SnowBrosAssets/Start/start1.png");
+    start_t2.loadFromFile("SnowBrosAssets/Start/start2.png");
+    lose_t.loadFromFile("SnowBrosAssets/Start/lose1.png");
     font.loadFromFile("SnowBrosAssets/Fonts/Starborn.ttf");
     level_music.openFromFile("SnowBrosAssets/Sounds/snow_bros_level.ogg");
     boss_music.openFromFile("SnowBrosAssets/Sounds/final_boss_snow_bros.ogg");
@@ -57,10 +73,11 @@ bool Assets::loadAll() {
         push[i].loadFromFile("SnowBrosAssets/Nick_sprites/push_0" + to_string(i + 1) + ".png");
     }
     for (int i = 0; i < 7; i++) {
-        walk[i].loadFromFile("SnowBrosAssets/Nick_sprites/death_0" + to_string(i + 1) + ".png");
+        death[i].loadFromFile("SnowBrosAssets/Nick_sprites/death_0" + to_string(i + 1) + ".png");
     }
 
-    idle.loadFromFile("SnowBrosAssets/Nick_sprites/walk_01.png");
+    idle[0].loadFromFile("SnowBrosAssets/Nick_sprites/walk_01.png");
+    idle[1].loadFromFile("SnowBrosAssets/Nick_sprites/walk_02.png");
     fall[0].loadFromFile("SnowBrosAssets/Nick_sprites/fall_01.png");
     tile_t.loadFromFile("SnowBrosAssets/Level1/tile.png");
     bg_t.loadFromFile("SnowBrosAssets/Level1/bg.png");
@@ -98,6 +115,38 @@ bool Assets::loadAll() {
     snow_attack_t.loadFromFile("SnowBrosAssets/Nick_sprites/Snow_01.png");
     mogera_t.loadFromFile("SnowBrosAssets/BossSprites/Mogera_01.png");
     gamakichi_t.loadFromFile("SnowBrosAssets/BossSprites/Gamakichi_01.png");
+
+    // Snowball effects
+    for (int i = 0; i < 4; i++) {
+        snow_explode[i].loadFromFile("SnowBrosAssets/Snowball/Snow_Ball_explode_0" + to_string(i + 1) + ".png");
+        snow_frost[i].loadFromFile("SnowBrosAssets/Snowball/frost_0" + to_string(i + 1) + ".png");
+        snow_power_roll[i].loadFromFile("SnowBrosAssets/Snowball/power_roll_0" + to_string(i + 1) + ".png");
+        snow_roll[i].loadFromFile("SnowBrosAssets/Snowball/roll_0" + to_string(i + 1) + ".png");
+    }
+
+    // Sushi
+    for (int i = 0; i < 5; i++) {
+        sushi[i].loadFromFile("SnowBrosAssets/Sushi/sushi" + to_string(i + 1) + ".png");
+    }
+
+    // Items
+    money_t.loadFromFile("SnowBrosAssets/items/money.png");
+
+    // More Boss variants
+    mogera_dead_t.loadFromFile("SnowBrosAssets/BossSprites/mogera_dead.png");
+    mogera_flying_t.loadFromFile("SnowBrosAssets/BossSprites/mogera_flying.png");
+    mogera_legs[0].loadFromFile("SnowBrosAssets/BossSprites/mogera_legs_01.png");
+    mogera_legs[1].loadFromFile("SnowBrosAssets/BossSprites/mogera_legs_02.png");
+
+    gamakichi_arms[0].loadFromFile("SnowBrosAssets/BossSprites/gamakichi_leftArm.png");
+    gamakichi_arms[1].loadFromFile("SnowBrosAssets/BossSprites/gamakichi_rightArm.png");
+    gamakichi_rocket_t.loadFromFile("SnowBrosAssets/BossSprites/gamakich_rocket.png");
+    gamakichi_rocket_encased_t.loadFromFile("SnowBrosAssets/BossSprites/gamakichi_rocketEncased.png");
+
+    // More Sounds
+    theme[0].openFromFile("SnowBrosAssets/Sounds/snow_bros_theme_01.ogg");
+    theme[1].openFromFile("SnowBrosAssets/Sounds/snow_bros_theme_02.ogg");
+
     return true;
 }
 void Assets::next_level() {

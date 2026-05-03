@@ -3,11 +3,12 @@
 using namespace sf;
 
 CharacterSelect::CharacterSelect() {
-    choice = 0;
-    selectionDone = false;
+
 }
 
 void CharacterSelect::setup(int playerNumber) {
+    choice = 0;
+    selectionDone = false;
     font.loadFromFile("SnowBrosAssets/Fonts/Starborn.ttf");
 
     bgTx.loadFromFile("SnowBrosAssets/Start/UIbg3.png");
@@ -65,7 +66,7 @@ void CharacterSelect::setup(int playerNumber) {
     tomStats.setFillColor(Color::White);
     tomStats.setPosition(310, 410);
 
-    
+
     tomTex.loadFromFile("SnowBrosAssets/Start/tom.png");
     tomSprite.setTexture(tomTex);
     tomSprite.setPosition(320, 206);
@@ -86,7 +87,7 @@ void CharacterSelect::setup(int playerNumber) {
     customStats.setFillColor(Color::White);
     customStats.setPosition(540, 410);
 
-    
+
     customTex.loadFromFile("SnowBrosAssets/Start/tiger.png");
     customSprite.setTexture(customTex);
     customSprite.setPosition(550, 206);

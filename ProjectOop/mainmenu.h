@@ -37,7 +37,12 @@ public:
     void setup();
     void handleInput(sf::Event& event, sf::RenderWindow& window);
     void draw(sf::RenderWindow& window);
-
+    void resetChoice()
+    {
+        choice = 0;
+        showModeSelect = false;
+        modeSelected = false;
+    }
     int getChoice() { return choice; }
     bool getModeSelected() { return modeSelected; }
     bool getIsSinglePlayer() { return isSinglePlayer; }

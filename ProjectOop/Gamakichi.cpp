@@ -15,7 +15,16 @@ Gamakichi::Gamakichi(float startX, float startY)
 }
 
 void Gamakichi::update(float deltaTime) {
+    if (Rolling) {
+        x += Roll_speed * deltaTime;
+        applyGravity(deltaTime);
+        if ((x <= 0) || (x + getHitbox().width >= 800)) {
+            kill();
+        }
+        return;
+    }
     attackTimer += deltaTime;
+
     //gravity
     bool was_grounded = on_ground;
     applyGravity(deltaTime, 450.0f);

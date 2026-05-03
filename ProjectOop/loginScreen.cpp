@@ -4,7 +4,7 @@ using namespace sf;
 LoginScreen::LoginScreen() {
     isLoggedIn = false;
     activeBox = 1; // cursor on username 
-   
+
     showError = false;
     usernameStr = "";
     passwordStr = "";
@@ -12,18 +12,18 @@ LoginScreen::LoginScreen() {
 }
 
 void LoginScreen::setup() {
-    
+
     //loading font
     font.loadFromFile("SnowBrosAssets/Fonts/Starborn.ttf");
     //background 
-    bgTx.loadFromFile("BG.png");
+    bgTx.loadFromFile("SnowBrosAssets/Start/BG.png");
 
     bgSp.setTexture(bgTx);
     bgSp.setScale(
         800.0f / bgTx.getSize().x,
         600.0f / bgTx.getSize().y
     );
-    
+
     titleText.setFont(font);
     titleText.setString("Snow Bros");
     titleText.setCharacterSize(50);

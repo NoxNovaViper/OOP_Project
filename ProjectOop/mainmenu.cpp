@@ -1,4 +1,4 @@
-#include "Mainmenu.h"
+#include "mainmenu.h"
 #include<iostream>
 using namespace std;
 
@@ -12,7 +12,7 @@ Mainmenu::Mainmenu() {
 void Mainmenu::setup() {
     font.loadFromFile("SnowBrosAssets/Fonts/Starborn.ttf");
 
-    
+
     // background 
     if (!bgTx.loadFromFile("SnowBrosAssets/Start/menubg.png")) {
         cout << "Background image not loaded!\n";
@@ -23,14 +23,14 @@ void Mainmenu::setup() {
         600.0f / bgTx.getSize().y
     );
 
-                //game title
+    //game title
     titleText.setFont(font);
     titleText.setString("Snow Bros");
     titleText.setCharacterSize(60);
     titleText.setFillColor(Color::White);
     titleText.setPosition(270, 60);
 
-                //newGame button
+    //newGame button
     newGameBtn.setSize(Vector2f(300, 55));
     newGameBtn.setFillColor(Color(0, 150, 200));
     newGameBtn.setPosition(250, 180);
@@ -39,7 +39,7 @@ void Mainmenu::setup() {
     newGameText.setCharacterSize(24);
     newGameText.setFillColor(Color::White);
     newGameText.setPosition(320, 192);
-                            //contiune button
+    //contiune button
     continueBtn.setSize(Vector2f(300, 55));
     continueBtn.setFillColor(Color(0, 150, 200));
     continueBtn.setPosition(250, 260);
@@ -48,7 +48,7 @@ void Mainmenu::setup() {
     continueText.setCharacterSize(24);
     continueText.setFillColor(Color::White);
     continueText.setPosition(330, 272);
-                    //leaderboard button
+    //leaderboard button
     leaderboardBtn.setSize(Vector2f(300, 55));
     leaderboardBtn.setFillColor(Color(0, 150, 200));
     leaderboardBtn.setPosition(250, 340);
@@ -111,7 +111,7 @@ void Mainmenu::handleInput(Event& event, RenderWindow& window) {
                 choice = 4;
         }
         else {
-            
+
             if (singleBtn.getGlobalBounds().contains(mousePos)) {
                 isSinglePlayer = true;
                 modeSelected = true;

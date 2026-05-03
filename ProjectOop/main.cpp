@@ -11,13 +11,15 @@
 #include "characterChoiceScreen.h"
 #include "EnemyFactory.h"
 #include "Snowball.h"
+#include "shop.h"
 #include "Knife.h"
-#include "ArtilleryProjectile.h"
 #include "levelCompleteUI.h"
 #include "HUD.h"
 #include "BossDefeatedUI.h"
 #include "PauseMenu.h"
 #include "GameOverUI.h"
+#include "ArtilleryProjectile.h"
+#include "Boss.h"
 #include "characterChoiceUI.h"
 #include "mainmenu.h"
 #include "loginScreen.h"
@@ -27,45 +29,46 @@ using namespace sf;
 //constantss
 const int max_enemies = 50;
 const int max_projectiles = 30;
-int main(){
-	//start video rendering
+int main() {
+    //start video rendering
     RenderWindow window(VideoMode(800, 600), "Snow Bros");
     window.setFramerateLimit(60);
-	//==========Instances and initialization and declerations===========
+    //==========Instances and initialization and declerations===========
     Level_Manager manager;
     CharacterSelect select_screen;
     AuthManager auth;
     Mainmenu main_menu;
     PauseMenu pause_menu;
-    HUD hud(false);
+    HUD hud(true);
+    Shop shop;
     LoginScreen loginScreen;
     GameOverScreen gameOverScreen;
     LevelCompleteScreen levelCompleteScreen;
     Database db;
-	characterChoiceScreen choiceScreen(false);//false for 2 player mode, true for single player
-	string currentUser = "";//variable to hold the current logged in user
+    characterChoiceScreen choiceScreen(false);//false for 2 player mode, true for single player
+    string currentUser = "";//variable to hold the current logged in user
     Enemy* active_enemies[max_enemies];
     Projectile* active_projectiles[max_projectiles];
     int projectile_count = 0;
     int enemy_count = 0;
-    float p1DamageCooldown = 0.0f;
-    float p2DamageCooldown = 0.0f;
-    for (int i = 0; i < max_enemies; i++) {
-        active_enemies[i] = nullptr;
-    }
-    for (int i = 0; i < max_projectiles; i++) {
-        active_projectiles[i] = nullptr;
-    }
+    LoginScreen loginScreen2;
+    string currentUser2 = "";
+    bool showLeaderboard = false;
     Assets::loadAll();
-    hud.setup();
     loginScreen.setup();
+    pause_menu.setup();
     main_menu.setup();
+    shop.setup();
     levelCompleteScreen.setup();
     gameOverScreen.setup();
+    loginScreen2.setup();
+
+    loginScreen2.setTitle("Player 2--Login");
+    bool p1Selected = false;
     Sprite bg_s(Assets::bg_t);
     Sprite tile_s(Assets::tile_t);
     Player p1(200, 300, 1, 1), p2(600, 300, 2, 1);
-	//============P1 Initialization==============
+    //============P1 Initialization==============
     p1.set_x(200); p1.set_y(300);
     p1.set_vy(0);
     p1.set_hitbox(FloatRect(p1.get_x(), p1.get_y(), 30, 50));
@@ -75,31 +78,16 @@ int main(){
     p2.set_hitbox(FloatRect(p2.get_x(), p2.get_y(), 30, 50));
     load_assets(p1);
     load_assets(p2);
-   //=============Clock for delta time===========
+    //=============Clock for delta time===========
     Clock time;
     //==========font for text===============
-	Font font;
+    Font font;
     if (!font.loadFromFile("SnowBrosAssets/Fonts/Starborn.ttf")) {
         cout << "Rip";
         return 0;
     }
-	//==============Texts for character select screen===============
-    Text t1_t, t2_t, t3_t;
-    t1_t.setString("Nick");
-    t2_t.setString("Tom");
-    t3_t.setString("Bob");
-    t1_t.setFont(font);
-    t2_t.setFont(font);
-    t3_t.setFont(font);
-    t1_t.setFillColor(Color::White);
-    t2_t.setFillColor(Color::White);
-    t3_t.setFillColor(Color::White);
-    t1_t.setCharacterSize(24);
-    t2_t.setCharacterSize(24);
-    t3_t.setCharacterSize(24);
-    t1_t.setPosition(300, 200);
-    t2_t.setPosition(300, 300);
-    t3_t.setPosition(300, 400);
+
+
 
     //Starting screen sprites
     Sprite start_s(Assets::start_t1);
@@ -119,15 +107,9 @@ int main(){
     //==================Music Setup======================
     Assets::level_music.setLoop(true);
     Assets::boss_music.setLoop(true);
-    while (window.isOpen()){
+    while (window.isOpen()) {
         window.clear(Color::Black);
         float deltaTime = time.restart().asSeconds();
-        if (p1DamageCooldown > 0.0f) {
-            p1DamageCooldown -= deltaTime;
-        }
-        if (p2DamageCooldown > 0.0f) {
-            p2DamageCooldown -= deltaTime;
-        }
         //plays animation at 1fps of the start screen
         if (manager.get_start_screen()) {
             start_timer += deltaTime;
@@ -145,7 +127,7 @@ int main(){
             }
         }
         Event ev;//event handler
-		//Event polling and handling
+        //Event polling and handling
         while (window.pollEvent(ev))
         {
             if (ev.type == Event::Closed)
@@ -162,13 +144,13 @@ int main(){
                 loginScreen.handleInput(ev, window);
                 if ((loginScreen.getIsLoggedIn()) || (login)) {
                     string user = loginScreen.getLoggedInUsername();
-                        if (!user.empty()) {
-                            if (login) {
-                                auth.registerUser(user, "pass");
-                                if (!auth.loginUser(user, "pass")) {
-                                    return 0;
-                                }
+                    if (!user.empty()) {
+                        if (login) {
+                            auth.registerUser(user, "pass");
+                            if (!auth.loginUser(user, "pass")) {
+                                return 0;
                             }
+                        }
                         currentUser = user;
                         manager.set_login(false);
                         manager.set_main_menu(true);
@@ -180,61 +162,106 @@ int main(){
                     }
                 }
             }
+            else if (manager.get_login2()) {
+                loginScreen2.handleInput(ev, window);
+                if (loginScreen2.getIsLoggedIn()) {
+                    string user2 = loginScreen2.getLoggedInUsername();
+                    if (!user2.empty()) {
+                        currentUser2 = user2;
+                        manager.set_login2(false);
+                        manager.set_character_select(true);
+                        select_screen.setup(2);
+                        // load P2 progress
+                        int lvl2, liv2, gems2, sc2;
+                        db.loadProgress(currentUser2, lvl2, liv2, gems2, sc2);
+                        p2.set_lives(liv2);
+                        p2.set_score(sc2);
+                        p2.set_gemCount(gems2);
+                    }
+                }
+            }
             else if (manager.get_main_menu()) {
                 main_menu.handleInput(ev, window);
-                if (main_menu.getChoice() == 1) {
+                if (main_menu.getChoice() == 1)
                     manager.set_main_menu(false);
+                if (!main_menu.getIsSinglePlayer()) {
+                    manager.set_login2(true);
+                }
+                else {
                     manager.set_character_select(true);
-                    if (main_menu.getIsSinglePlayer()) {
-                        select_screen.setup(1);
+                    select_screen.setup(1);
+                }
+                if (main_menu.getChoice() == 2) {  // Continue
+
+                    int lvl, liv, gems, sc;
+                    db.loadProgress(currentUser, lvl, liv, gems, sc);
+                    if (lvl == 0) {
+                        // no save found, do nothing
                     }
                     else {
-                        select_screen.setup(2);
+                        p1.set_lives(liv);
+                        p1.set_score(sc);
+                        p1.set_gemCount(gems);
+                        manager.set_main_menu(false);
+                        manager.set_character_select(true);
+                        select_screen.setup(1);
                     }
+
+                }
+                if (main_menu.getChoice() == 3) {  // Leaderboard
+                    db.displayLeaderboard();  // prints to console for now
+                    showLeaderboard = true;
+                    manager.set_main_menu(false);
+                }
+                if (main_menu.getChoice() == 4) {  // Exit
+                    window.close();
+                }
+            }
+
+            else if (manager.get_pause())
+            {
+                pause_menu.handleInput(ev, window);
+
+
+            }
+            else if (manager.get_shop()) {
+                shop.handleInput(ev, window, p1);
+
+                if (!shop.getIsOpen()) {
+                    manager.set_shop(false);
+                    manager.set_pause(true);  //back to pause menu
+                    pause_menu.open();
                 }
             }
             else if (manager.get_character_select()) {
                 select_screen.handleInput(ev, window);
-                
+
                 if (select_screen.getSelectionDone()) {
-                    choiceScreen.player1Select(select_screen.getChoice());
-                    if (choiceScreen.getPlayer2Choice() == 0) {
-                        choiceScreen.player2Select(1);
-                    }
-                    choiceScreen.confirmSelection();
-                    manager.set_character_select(false);
-                    manager.set_play(true);
-                    manager.set_next_level(true);
-                    Assets::level_music.play();
-                }
-
-                if (ev.type == Event::KeyPressed) {
-                    if (ev.key.code == Keyboard::Num1) {
-                        choiceScreen.player1Select(1);
-                    }
-                    if (ev.key.code == Keyboard::Num2) {
-                        choiceScreen.player1Select(2);
-                    }
-                    if (ev.key.code == Keyboard::Num3) {
-                        choiceScreen.player1Select(3);
-                    }
-
-                    if (ev.key.code == Keyboard::Numpad1) {
-                        choiceScreen.player2Select(1);
-                    }
-                    if (ev.key.code == Keyboard::Numpad2) {
-                        choiceScreen.player2Select(2);
-                    }
-                    if (ev.key.code == Keyboard::Numpad3) {
-                        choiceScreen.player2Select(3);
-                    }
-
-                    if ((ev.key.code == Keyboard::Enter) && (choiceScreen.getPlayer1Choice() != 0)) {
-                        //Default P2 to choice 1 if they haven't picked
-                        if (choiceScreen.getPlayer2Choice() == 0) {
-                            choiceScreen.player2Select(1);
+                    if (!p1Selected) {
+                        choiceScreen.player1Select(select_screen.getChoice());
+                        p1Selected = true;
+                        hud = HUD(false);
+                        hud.setup();
+                        if (!main_menu.getIsSinglePlayer()) {
+                            select_screen.setup(1);
+                            continue;
                         }
+                        else {
+                            choiceScreen.player2Select(1);
+                            choiceScreen.confirmSelection();
+                            p1Selected = false;
+                            hud = HUD(true);
+                            hud.setup();
+                            manager.set_character_select(false);
+                            manager.set_play(true);
+                            manager.set_next_level(true);
+                            Assets::level_music.play();
+                        }
+                    }
+                    else {
+                        choiceScreen.player2Select(select_screen.getChoice());
                         choiceScreen.confirmSelection();
+                        p1Selected = false;
                         manager.set_character_select(false);
                         manager.set_play(true);
                         manager.set_next_level(true);
@@ -244,15 +271,34 @@ int main(){
             }
             else {
                 Inputhandle(ev, manager, window, p1, p2, active_projectiles, projectile_count);
+                if (ev.type == Event::KeyPressed && ev.key.code == Keyboard::P) {
+                    manager.set_pause(true);
+                    manager.set_play(false);
+                    pause_menu.open();
+                }
+
             }
         }
+
         //HUD update
-        hud.update(p1.get_score(), p1.getHP(), p1.get_gemCount(), 
-                   p2.get_score(), p2.getHP(), p2.get_gemCount(), 
-                   current_bg_level, 10, "", 0, 100);
+        int bossHP = 0, bossMaxHP = 100;
+        bool bossActive = false;
+        for (int i = 0; i < enemy_count; i++) {
+            if (active_enemies[i] != nullptr && active_enemies[i]->get_enemy_type() >= 4) {
+                bossHP = active_enemies[i]->getHP();
+                bossMaxHP = active_enemies[i]->get_max_hp();
+                bossActive = true;
+                break;
+            }
+        }
+        hud.setBossLevel(bossActive);
+        hud.update(p1.get_score(), p1.get_lives(), p1.get_gemCount(),
+            p2.get_score(), p2.get_lives(), p2.get_gemCount(),
+            current_bg_level, 10, "", bossHP, bossMaxHP);
 
         //movement logic in game
-        if (!manager.get_login() && !manager.get_character_select() && !manager.get_pause()) {
+        if (!manager.get_login() && !manager.get_login2() && !manager.get_character_select() && !manager.get_pause() &&
+            !manager.get_shop() && !manager.get_main_menu() && manager.get_play()) {
             if (Keyboard::isKeyPressed(Keyboard::A)) {
                 p_move(p1, -p1.get_speed(), deltaTime, true);
                 p1.right_facing = false;
@@ -268,13 +314,16 @@ int main(){
                 manager.set_lose(true);
                 gameOverScreen.setData(p1.get_score() + p2.get_score(), current_bg_level);
             }
-            if (Keyboard::isKeyPressed(Keyboard::Num4)) {
-                p_move(p2, -p2.get_speed(), deltaTime, true);
-                p2.right_facing = false;
-            }
-            if (Keyboard::isKeyPressed(Keyboard::Num6)) {
-                p_move(p2, p2.get_speed(), deltaTime, true);
-                p2.right_facing = true;
+            if (!main_menu.getIsSinglePlayer())
+            {
+                if (Keyboard::isKeyPressed(Keyboard::Num4)) {
+                    p_move(p2, -p2.get_speed(), deltaTime, true);
+                    p2.right_facing = false;
+                }
+                if (Keyboard::isKeyPressed(Keyboard::Num6)) {
+                    p_move(p2, p2.get_speed(), deltaTime, true);
+                    p2.right_facing = true;
+                }
             }
             //P1 Physics
             Gravity(p1, 980.0f, deltaTime);
@@ -285,13 +334,15 @@ int main(){
             h1.top = p1.get_y();
             p1.set_hitbox(h1);
             //P2 Physics
-            Gravity(p2, 980.0f, deltaTime);
-            Position_change(p2, true, p2.get_vy(), deltaTime, false);
-            //Hitbox update for P2
-            FloatRect h2 = p2.get_hitbox();
-            h2.left = p2.get_x();
-            h2.top = p2.get_y();
-            p2.set_hitbox(h2);
+            if (!main_menu.getIsSinglePlayer()) {
+                Gravity(p2, 980.0f, deltaTime);
+                Position_change(p2, true, p2.get_vy(), deltaTime, false);
+                //Hitbox update for P2
+                FloatRect h2 = p2.get_hitbox();
+                h2.left = p2.get_x();
+                h2.top = p2.get_y();
+                p2.set_hitbox(h2);
+            }
             //Player 1 Platform Collision
             p1.set_on_ground(false);
             if (manager.get_current_level() != nullptr) {
@@ -317,20 +368,22 @@ int main(){
                 p1.set_on_ground(true);
             }
             //Player 2 Platform Collision
-            p2.set_on_ground(false);
-            if (manager.get_current_level() != nullptr) {
-                float p2_bottom = p2.get_y() + p2.get_hitbox().height;
-                for (int i = 0; i < manager.get_current_level()->num_platforms; i++) {//checks each platform
-                    platform pt = manager.get_current_level()->platforms[i];//gets the right one
-                    if (p2.get_vy() >= 0 && p2.get_hitbox().intersects(pt.collison)) {//checks if the falling player intersects with it
-                        if (p2_bottom - pt.y < 30.0f) {//checks if the player is close enough to the top
-                            Fix_collision(p2, pt.y);//adjusts player position and velocity
-                            p2.set_on_ground(true);//set on ground to true
-                            FloatRect h2_new = p2.get_hitbox();//update hitbox after collision fix
-                            h2_new.left = p2.get_x();
-                            h2_new.top = p2.get_y();
-                            p2.set_hitbox(h2_new);
-                            break;
+            if (!main_menu.getIsSinglePlayer()) {
+                p2.set_on_ground(false);
+                if (manager.get_current_level() != nullptr) {
+                    float p2_bottom = p2.get_y() + p2.get_hitbox().height;
+                    for (int i = 0; i < manager.get_current_level()->num_platforms; i++) {//checks each platform
+                        platform pt = manager.get_current_level()->platforms[i];//gets the right one
+                        if (p2.get_vy() >= 0 && p2.get_hitbox().intersects(pt.collison)) {//checks if the falling player intersects with it
+                            if (p2_bottom - pt.y < 30.0f) {//checks if the player is close enough to the top
+                                Fix_collision(p2, pt.y);//adjusts player position and velocity
+                                p2.set_on_ground(true);//set on ground to true
+                                FloatRect h2_new = p2.get_hitbox();//update hitbox after collision fix
+                                h2_new.left = p2.get_x();
+                                h2_new.top = p2.get_y();
+                                p2.set_hitbox(h2_new);
+                                break;
+                            }
                         }
                     }
                 }
@@ -344,31 +397,37 @@ int main(){
             for (int i = 0; i < enemy_count; i++) {//updates each enemy
                 if (active_enemies[i] != nullptr) {//check if the enemy even exists
                     active_enemies[i]->update(deltaTime);//updates that enemy's logic
+                    active_enemies[i]->check_platform_collision(manager.get_current_level());
 
                     if (active_enemies[i]->hasSpawnRequest && enemy_count < max_enemies) {
-                        Enemy* spawnedEnemy = EnemyFactory::e(active_enemies[i]->spawnType, active_enemies[i]->spawnX, active_enemies[i]->spawnY);
+                        float targetX = p1.get_x();
+                        if (!main_menu.getIsSinglePlayer()) {
+                            // Target closest player
+                            if (abs(p2.get_x() - active_enemies[i]->getx()) < abs(p1.get_x() - active_enemies[i]->getx())) {
+                                targetX = p2.get_x();
+                            }
+                        }
+                        Enemy* spawnedEnemy = EnemyFactory::e(active_enemies[i]->spawnType, active_enemies[i]->spawnX, active_enemies[i]->spawnY, targetX);
                         if (spawnedEnemy != nullptr) {
                             active_enemies[enemy_count++] = spawnedEnemy;
                         }
                         active_enemies[i]->hasSpawnRequest = false;
                     }
-
+                    
                     if (active_enemies[i]->hasProjectileRequest && projectile_count < max_projectiles) {
-                        if (active_enemies[i]->projectileType == "Knife") {
-                            float targetX = p1.get_x();
-                            float targetY = p1.get_y();
-                            float p1Dist = p1.get_x() - active_enemies[i]->getx();
-                            float p2Dist = p2.get_x() - active_enemies[i]->getx();
-                            if (p1Dist < 0.0f) p1Dist = -p1Dist;
-                            if (p2Dist < 0.0f) p2Dist = -p2Dist;
-                            if (p2Dist < p1Dist) {
-                                targetX = p2.get_x();
-                                targetY = p2.get_y();
-                            }
-                            active_projectiles[projectile_count++] = new Knife(active_enemies[i]->pX, active_enemies[i]->pY, targetX, targetY);
-                        }
-                        else if (active_enemies[i]->projectileType == "Artillery") {
+                        if (active_enemies[i]->projectileType == "Artillery") {
                             active_projectiles[projectile_count++] = new ArtilleryProjectile(active_enemies[i]->pX, active_enemies[i]->pY, active_enemies[i]->pVx, active_enemies[i]->pVy);
+                        }
+                        else if (active_enemies[i]->projectileType == "Knife") {
+                             float tx = p1.get_x();
+                             float ty = p1.get_y();
+                             if (!main_menu.getIsSinglePlayer()) {
+                                 if (abs(p2.get_x() - active_enemies[i]->getx()) < abs(p1.get_x() - active_enemies[i]->getx())) {
+                                     tx = p2.get_x();
+                                     ty = p2.get_y();
+                                 }
+                             }
+                             active_projectiles[projectile_count++] = new Knife(active_enemies[i]->pX, active_enemies[i]->pY, tx, ty);
                         }
                         active_enemies[i]->hasProjectileRequest = false;
                     }
@@ -377,21 +436,11 @@ int main(){
                     if (active_enemies[i]->get_encased() && !active_enemies[i]->get_rolling()) {
                         if (p1.get_hitbox().intersects(active_enemies[i]->getHitbox())) {
                             float kickDir = (p1.get_x() < active_enemies[i]->getx()) ? 400.0f : -400.0f;
-                            active_enemies[i]->start_rolling(kickDir, 1);
+                            active_enemies[i]->start_rolling(kickDir);
                         }
                         if (p2.get_hitbox().intersects(active_enemies[i]->getHitbox())) {
                             float kickDir = (p2.get_x() < active_enemies[i]->getx()) ? 400.0f : -400.0f;
-                            active_enemies[i]->start_rolling(kickDir, 2);
-                        }
-                    }
-                    else if (!active_enemies[i]->get_rolling()) {
-                        if (p1DamageCooldown <= 0.0f && p1.get_hitbox().intersects(active_enemies[i]->getHitbox())) {
-                            p1.takeDamage();
-                            p1DamageCooldown = 1.0f;
-                        }
-                        if (p2DamageCooldown <= 0.0f && p2.get_hitbox().intersects(active_enemies[i]->getHitbox())) {
-                            p2.takeDamage();
-                            p2DamageCooldown = 1.0f;
+                            active_enemies[i]->start_rolling(kickDir);
                         }
                     }
                     //removal
@@ -409,31 +458,28 @@ int main(){
             for (int i = 0; i < projectile_count; i++) {
                 if (active_projectiles[i] != nullptr) {//check if projectile exists
                     active_projectiles[i]->update(deltaTime);
-                    if (dynamic_cast<Knife*>(active_projectiles[i]) != nullptr || dynamic_cast<ArtilleryProjectile*>(active_projectiles[i]) != nullptr) {
-                        FloatRect projectileHitbox = active_projectiles[i]->getHitbox();
-                        if (p1DamageCooldown <= 0.0f && projectileHitbox.intersects(p1.get_hitbox())) {
-                            p1.takeDamage();
-                            p1DamageCooldown = 1.0f;
-                            active_projectiles[i]->setisactive(false);
-                        }
-                        if (p2DamageCooldown <= 0.0f && projectileHitbox.intersects(p2.get_hitbox())) {
-                            p2.takeDamage();
-                            p2DamageCooldown = 1.0f;
-                            active_projectiles[i]->setisactive(false);
+                    //Check for collisions with enemies
+                    for (int j = 0; j < enemy_count; j++) {
+                        if (active_enemies[j] != nullptr) {
+                            FloatRect ballHitbox = active_projectiles[i]->getHitbox();
+                            FloatRect enemyHitbox = active_enemies[j]->getHitbox();
+                            if (ballHitbox.intersects(enemyHitbox)) {
+                                active_enemies[j]->hit();
+                                active_projectiles[i]->setisactive(false);
+                                break;
+                            }
                         }
                     }
-                    else {
-                        //Check for collisions with enemies
-                        for (int j = 0; j < enemy_count; j++) {
-                            if (active_enemies[j] != nullptr) {
-                                FloatRect ballHitbox = active_projectiles[i]->getHitbox();
-                                FloatRect enemyHitbox = active_enemies[j]->getHitbox();
-                                if (ballHitbox.intersects(enemyHitbox)) {
-                                    active_enemies[j]->hit();
-                                    active_projectiles[i]->setisactive(false);
-                                    break;
-                                }
-                            }
+                    //Check for collisions with players (only for enemy projectiles like Knife or Artillery)
+                    if (dynamic_cast<Snowball*>(active_projectiles[i]) == nullptr) {
+                        FloatRect projHitbox = active_projectiles[i]->getHitbox();
+                        if (projHitbox.intersects(p1.get_hitbox())) {
+                            p1.takeDamage();
+                            active_projectiles[i]->setisactive(false);
+                        }
+                        if (!main_menu.getIsSinglePlayer() && projHitbox.intersects(p2.get_hitbox())) {
+                            p2.takeDamage();
+                            active_projectiles[i]->setisactive(false);
                         }
                     }
                     if (!active_projectiles[i]->getisactive()) {
@@ -457,17 +503,6 @@ int main(){
                         }
                         FloatRect Hitbox_target = active_enemies[j]->getHitbox();
                         if (Hitbox_SnowBall.intersects(Hitbox_target)) {
-                            int owner = active_enemies[i]->get_rolling_owner();
-                            int enemyType = active_enemies[j]->get_enemy_type();
-                            int gems = active_enemies[j]->get_gemdrop();
-                            if (owner == 1) {
-                                p1.enemykilled(enemyType);
-                                p1.pickGem(gems);
-                            }
-                            else if (owner == 2) {
-                                p2.enemykilled(enemyType);
-                                p2.pickGem(gems);
-                            }
                             active_enemies[j]->kill();
                             active_enemies[i]->grow_rolling();
                         }
@@ -522,12 +557,82 @@ int main(){
         else if (manager.get_login()) {
             loginScreen.draw(window);
         }
+        else if (manager.get_login2()) {
+            loginScreen2.draw(window);
+        }
         else if (manager.get_main_menu()) {
             main_menu.draw(window);
         }
+
         else if (manager.get_character_select()) {
             select_screen.draw(window);
         }
+        else if (manager.get_pause()) {
+            pause_menu.draw(window);
+            if (pause_menu.getChoice() == 1) {  // Resume
+                manager.set_pause(false);
+                manager.set_play(true);
+                pause_menu.close();
+                pause_menu.resetChoice();
+            }
+            if (pause_menu.getChoice() == 2) {  // shop
+
+                manager.set_pause(false);
+                manager.set_shop(true);
+                shop.opentheShop();
+                pause_menu.close();
+                pause_menu.resetChoice();
+            }
+            if (pause_menu.getChoice() == 3) {  // Save
+                db.saveProgress(currentUser, current_bg_level,
+                    p1.get_lives(), p1.get_gemCount(), p1.get_score());
+                db.saveLeaderboard(currentUser, p1.get_score(), current_bg_level);
+                if (!main_menu.getIsSinglePlayer()) {
+                    db.saveProgress(currentUser2, current_bg_level,
+                        p2.get_lives(), p2.get_gemCount(), p2.get_score());
+                    db.saveLeaderboard(currentUser2, p2.get_score(), current_bg_level);
+                }
+                pause_menu.resetChoice();
+            }
+            if (pause_menu.getChoice() == 4) {
+                db.saveProgress(currentUser, current_bg_level,
+                    p1.get_lives(), p1.get_gemCount(), p1.get_score());
+                manager.set_pause(false);
+                manager.set_play(false);
+                loginScreen = LoginScreen();
+                loginScreen.setup();
+                manager.set_login(true);
+                p1Selected = false;
+                main_menu.resetChoice();
+                pause_menu.close();
+
+                pause_menu.resetChoice();
+                currentUser = "";
+            }
+            if (pause_menu.getChoice() == 5) {
+                db.saveProgress(currentUser, current_bg_level,
+                    p1.get_lives(), p1.get_gemCount(), p1.get_score());
+                if (!main_menu.getIsSinglePlayer()) {
+                    db.saveProgress(currentUser2, current_bg_level,
+                        p2.get_lives(), p2.get_gemCount(), p2.get_score());
+                }
+                manager.set_pause(false);
+                manager.set_play(false);
+                manager.set_main_menu(true);
+                p1Selected = false;
+                main_menu.resetChoice();
+                pause_menu.close();
+                pause_menu.resetChoice();
+            }
+
+        }
+        else if (manager.get_shop())
+        {
+            shop.draw(window, p1);
+        }
+
+
+
         else if (manager.get_win()) {
             levelCompleteScreen.draw(window);
             levelCompleteScreen.handleInput(ev, window);
@@ -545,24 +650,27 @@ int main(){
                 manager.set_play(true);
             }
         }
-
+        else if (manager.get_shop()) {
+            shop.draw(window, p1);
+        }
         else {
             window.draw(bg_s);
             //Drawing tiles for platforms   
             if (manager.get_current_level() != nullptr) {
                 for (int i = 0; i < manager.get_current_level()->num_platforms; i++) {
                     platform& plt = manager.get_current_level()->platforms[i];
-                    tile_s.setScale(static_cast<float>(plt.w) /((Assets::tile_t.getSize().x)),  static_cast<float>(plt.h) / Assets::tile_t.getSize().y);
+                    tile_s.setScale(static_cast<float>(plt.w) / ((Assets::tile_t.getSize().x)), static_cast<float>(plt.h) / Assets::tile_t.getSize().y);
                     tile_s.setPosition(plt.x, plt.y);
                     window.draw(tile_s);
                 }
             }
             //P1 and P2 drawn after the bg and platforms so they appear in front, with their updated positions
             update_animations(p1, deltaTime, !p1.right_facing, p1.right_facing);//update player animations based on movement
-            update_animations(p2, deltaTime, !p2.right_facing, p2.right_facing);
             window.draw(p1.get_sprite()); //draw player 1
-            window.draw(p2.get_sprite());//draw player 2
-
+            if (!main_menu.getIsSinglePlayer()) {
+                update_animations(p2, deltaTime, !p2.right_facing, p2.right_facing);
+                window.draw(p2.get_sprite());//draw player 2
+            }
             //Draw Enemies
             for (int i = 0; i < enemy_count; i++) {
                 if (active_enemies[i] != nullptr) {
@@ -597,8 +705,9 @@ int main(){
                 window.draw(lose_s);
             }
         }
+
         //HUD drawn
-        if (!manager.get_start_screen() && !manager.get_login()) {
+        if (manager.get_play() || manager.get_pause() || manager.get_shop()) {
             hud.draw(window);
         }
         window.display();
