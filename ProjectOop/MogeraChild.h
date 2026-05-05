@@ -5,17 +5,17 @@ using namespace std;
 using namespace sf;
 class MogeraChild : public Enemy {
 private:
-    float vy;
-    bool on_ground;
     float directionX;
 
 public:
     MogeraChild(float startX, float startY);
-    void update(float deltaTime) override;
+    void update(float Time) override;
     void draw(sf::RenderWindow& window) override;
     void hit() override;
+    float get_direction_x() const;
+    void set_direction_x(float new_direction_x);
     FloatRect getHitbox() const override {
-        float size = get_rolling() ? 20.0f * get_roll_scale() : 20.0f;
+        float size = get_rolling() ? 40.0f * get_roll_scale() : 40.0f;
         return FloatRect(x, y, size, size);//child hitbox defined
     }
 };

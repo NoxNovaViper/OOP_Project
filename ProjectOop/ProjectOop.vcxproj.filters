@@ -241,6 +241,18 @@
     <Image Include="..\..\..\..\Downloads\SnowBrosAssets\SnowBrosAssets\Images\Tornado_Blue.png">
       <Filter>Resource Files\SnowBrosAssets\Images</Filter>
     </Image>
+    <Image Include="SnowBrosAssets\Images\Tornado_Blue_01.png">
+      <Filter>Resource Files\SnowBrosAssets\Images</Filter>
+    </Image>
+    <Image Include="SnowBrosAssets\Images\Tornado_Blue_02.png">
+      <Filter>Resource Files\SnowBrosAssets\Images</Filter>
+    </Image>
+    <Image Include="SnowBrosAssets\Images\Tornado_Blue_03.png">
+      <Filter>Resource Files\SnowBrosAssets\Images</Filter>
+    </Image>
+    <Image Include="SnowBrosAssets\Images\Tornado_Blue_04.png">
+      <Filter>Resource Files\SnowBrosAssets\Images</Filter>
+    </Image>
     <Image Include="..\..\..\..\Downloads\SnowBrosAssets\SnowBrosAssets\Images\Tornado_Red.png">
       <Filter>Resource Files\SnowBrosAssets\Images</Filter>
     </Image>
@@ -274,10 +286,28 @@
     <Image Include="..\..\..\..\Downloads\SnowBrosAssets\SnowBrosAssets\Images\FlyingFoogaFoog_Blue.png">
       <Filter>Resource Files\SnowBrosAssets\Images</Filter>
     </Image>
+    <Image Include="SnowBrosAssets\Images\FlyingFoogaFoog_Blue_01.png">
+      <Filter>Resource Files\SnowBrosAssets\Images</Filter>
+    </Image>
+    <Image Include="SnowBrosAssets\Images\FlyingFoogaFoog_Blue_02.png">
+      <Filter>Resource Files\SnowBrosAssets\Images</Filter>
+    </Image>
+    <Image Include="SnowBrosAssets\Images\FlyingFoogaFoog_Blue_03.png">
+      <Filter>Resource Files\SnowBrosAssets\Images</Filter>
+    </Image>
+    <Image Include="SnowBrosAssets\Images\FlyingFoogaFoog_Blue_04.png">
+      <Filter>Resource Files\SnowBrosAssets\Images</Filter>
+    </Image>
     <Image Include="..\..\..\..\Downloads\SnowBrosAssets\SnowBrosAssets\Images\FlyingFoogaFoog_Orange.png">
       <Filter>Resource Files\SnowBrosAssets\Images</Filter>
     </Image>
     <Image Include="..\..\..\..\Downloads\SnowBrosAssets\SnowBrosAssets\Images\FlyingFoogaFoog_Red.png">
+      <Filter>Resource Files\SnowBrosAssets\Images</Filter>
+    </Image>
+    <Image Include="SnowBrosAssets\Images\Knife_Tornado_Blue.png">
+      <Filter>Resource Files\SnowBrosAssets\Images</Filter>
+    </Image>
+    <Image Include="SnowBrosAssets\Images\Snow_Attack_Nick.png">
       <Filter>Resource Files\SnowBrosAssets\Images</Filter>
     </Image>
     <Image Include="SnowBrosAssets\Nick_sprites\fall_01.png">
@@ -323,6 +353,30 @@
       <Filter>Resource Files\SnowBrosAssets\Nick_sprites</Filter>
     </Image>
     <Image Include="SnowBrosAssets\Nick_sprites\walk_04.png">
+      <Filter>Resource Files\SnowBrosAssets\Nick_sprites</Filter>
+    </Image>
+    <Image Include="SnowBrosAssets\Nick_sprites\death_01.png">
+      <Filter>Resource Files\SnowBrosAssets\Nick_sprites</Filter>
+    </Image>
+    <Image Include="SnowBrosAssets\Nick_sprites\death_02.png">
+      <Filter>Resource Files\SnowBrosAssets\Nick_sprites</Filter>
+    </Image>
+    <Image Include="SnowBrosAssets\Nick_sprites\death_03.png">
+      <Filter>Resource Files\SnowBrosAssets\Nick_sprites</Filter>
+    </Image>
+    <Image Include="SnowBrosAssets\Nick_sprites\death_04.png">
+      <Filter>Resource Files\SnowBrosAssets\Nick_sprites</Filter>
+    </Image>
+    <Image Include="SnowBrosAssets\Nick_sprites\push_01.png">
+      <Filter>Resource Files\SnowBrosAssets\Nick_sprites</Filter>
+    </Image>
+    <Image Include="SnowBrosAssets\Nick_sprites\push_02.png">
+      <Filter>Resource Files\SnowBrosAssets\Nick_sprites</Filter>
+    </Image>
+    <Image Include="SnowBrosAssets\Nick_sprites\push_03.png">
+      <Filter>Resource Files\SnowBrosAssets\Nick_sprites</Filter>
+    </Image>
+    <Image Include="SnowBrosAssets\Nick_sprites\push_04.png">
       <Filter>Resource Files\SnowBrosAssets\Nick_sprites</Filter>
     </Image>
     <Image Include="SnowBrosAssets\Level10\bg.png">

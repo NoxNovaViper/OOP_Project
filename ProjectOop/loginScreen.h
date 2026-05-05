@@ -7,52 +7,55 @@ using namespace sf;
 class LoginScreen {
 private:
     AuthManager auth;
-    bool isLoggedIn;
-    Texture bgTx;
-    Sprite bgSp;
+    bool is_logged_in;
+    Texture bg_tx;
+    Sprite bg_sp;
     // window font
     Font font;
     // background
     RectangleShape background;
     // title text
-    Text titleText;
+    Text title_text;
     // username box
-    RectangleShape usernameBox;
-    Text usernameLabel;
-    Text usernameInput;
+    RectangleShape username_box;
+    Text username_label;
+    Text username_input;
     // password box
-    sf::RectangleShape passwordBox;
-    sf::Text passwordLabel;
-    sf::Text passwordInput;
+    RectangleShape password_box;
+    Text password_label;
+    Text password_input;
 
     // buttons
-    sf::RectangleShape loginButton;
-    sf::Text loginButtonText;
-    sf::RectangleShape registerButton;
-    sf::Text registerButtonText;
+    RectangleShape login_button;
+    Text login_button_text;
+    RectangleShape register_button;
+    Text register_button_text;
 
     // error message
-    sf::Text errorText;
+    Text error_text;
 
     // stored input strings
-    string usernameStr;
-    string passwordStr;
+    string username_str;
+    string password_str;
 
     // which box is active
     // 1 = username box  2 = password box
-    int activeBox;
+    int active_box;
 
     // show error or not
-    bool showError;
-    string errorMessage;
+    bool show_error;
+    string error_message;
 
 public:
     LoginScreen();
-    void setup();
-    void handleInput(Event& event, RenderWindow& window);
+    void set_up();
+    void handle_input(Event& event, RenderWindow& window);
     void draw(RenderWindow& window);
-
-    bool getIsLoggedIn() { 
-        return isLoggedIn;}
-    string getLoggedInUsername() { return auth.getLoggedInUser(); }
+    void set_title(string title) {
+        title_text.setString(title);
+    }
+    bool get_is_logged_in() {
+        return is_logged_in;
+    }
+    string get_logged_in_username() { return auth.getLoggedInUser(); }
 };

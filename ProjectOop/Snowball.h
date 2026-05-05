@@ -7,11 +7,12 @@ class Snowball : public Projectile {
 private:
     float range;
     float distanceCovered;
-    bool isRolling;
     int chainCount;
 
     float lifetime;//duration of existence
     float vy;//arc vertical
+    float anim_timer;
+    int anim_frame;
 
 public:
     CircleShape ball;
@@ -19,6 +20,7 @@ public:
     Snowball(float startX, float startY, float dirX);
     void update(float deltaTime) override;
     void draw(RenderWindow& w);
+    bool isRolling;
     void startRolling();
     int getChainCount() const {
         return chainCount;

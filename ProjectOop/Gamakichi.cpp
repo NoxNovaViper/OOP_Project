@@ -4,107 +4,163 @@
 Gamakichi::Gamakichi(float startX, float startY)
     : Boss(startX, startY) {
     hp = 30;
-    maxhp = 30;
-    gemReward = 500;
+    max_hp = 30;
+    gem_reward = 500;
     attackTimer = 0.0f;
-    attackDuration = 2.0f;
+    attackDuration = 2.5f;
     projectileCount = 3;
+    x = 350.0f;
+    y = startY;
     armActive = true;
     right = true;
+    enemy_type = 5;
+    phase = 1;
+    jumpTimer = 0.0f;
+    jumpDuration = 3.0f;
+    fireQueue = 0;
+    fireDelayTimer = 0.0f;
 }
 
-void Gamakichi::update(float deltaTime) {
-    attackTimer += deltaTime;
-    //gravity
-    bool was_grounded = on_ground;
-    applyGravity(deltaTime, 400.0f);
-    //jump on landing
-    if (!was_grounded && on_ground) {
-        vy = -200.0f;
+void Gamakichi::update(float Time) {
+    if (Rolling) {
+        x += Roll_speed * Time;
+        applyGravity(Time);
+        if ((x <= 0) || (x + getHitbox().width >= 800)) {
+            kill();
+        }
+        return;
     }
-    //Phase logic updates based on HP in hit()
-    if (phase == 1) {
-        if (right) { 
-            x += 100 * deltaTime;
-        } 
-        else { 
-            x -= 100 * deltaTime; 
+
+    attackTimer += Time;
+    jumpTimer += Time;
+
+    // Phase thresholds — set here so phase updates during update()
+    if (hp <= 20 && hp > 10 && phase == 1) {
+        phase = 2;
+        attackDuration = 1.5f;
+    }
+    else if (hp <= 10 && phase == 2) {
+        phase = 3;
+        attackDuration = 0.8f;
+    }
+
+    // Gravity — use 500 floor (screen bottom)
+    applyGravity(Time, 500.0f);
+
+    // Horizontal movement — speed increases per phase
+    float move_speed = 80.0f;
+    if (phase == 2) move_speed = 130.0f;
+    if (phase == 3) move_speed = 200.0f;
+
+    if (right) {
+        x += move_speed * Time;
+        if (x > 680) right = false;
+    }
+    else {
+        x -= move_speed * Time;
+        if (x < 20) right = true;
+    }
+
+    // Jump periodically in phase 2+
+    if (phase >= 2 && jumpTimer >= jumpDuration) {
+        jumpTimer = 0.0f;
+        if (on_ground) {
+            vy = -450.0f;
+            on_ground = false;
         }
-        if (x > 700 || x < 0) {
-            right = !right;
+    }
+
+    // Process fire queue
+    if (fireQueue > 0) {
+        fireDelayTimer += Time;
+        if (fireDelayTimer >= 0.15f) {
+            fireDelayTimer = 0.0f;
+            if (fireQueue == 3) fireArtillery(-100.0f);
+            else if (fireQueue == 2) fireArtillery(0.0f);
+            else if (fireQueue == 1) fireArtillery(100.0f);
+            fireQueue--;
         }
-        
-        if (attackTimer >= attackDuration) {
-            attackTimer = 0;
-            fireArtillery();
+    }
+
+    // Fire artillery
+    if (attackTimer >= attackDuration && fireQueue == 0) {
+        attackTimer = 0.0f;
+        // In phase 3 fire a spread of 3 sequentially
+        if (phase == 3) {
+            fireQueue = 3;
+            fireDelayTimer = 0.15f;
         }
-    } else if (phase == 2) {
-        if (right) { 
-            x += 150 * deltaTime;
-        } else { 
-            x -= 150 * deltaTime;
-        }
-        if (x > 700 || x < 0) {
-            right = !right;
-        }
-        
-        if (attackTimer >= attackDuration) {
-            attackTimer = 0;
-            fireArtillery();
-        }
-    } else if (phase == 3) {
-        if (right) { 
-            x += 250 * deltaTime;
-        } else { 
-            x -= 250 * deltaTime;
-        }
-        if (x > 700 || x < 0) {
-            right = !right;
-        }
-        
-        if (attackTimer >= attackDuration) {
-            attackTimer = 0;
-            fireArtillery();
+        else {
+            fireArtillery(0.0f);
         }
     }
 }
+
 void Gamakichi::draw(sf::RenderWindow& window) {
-    sf::Sprite enemySprite;
-    enemySprite.setTexture(Assets::gamakichi_t);
-    int frameSize = Assets::gamakichi_t.getSize().y;
-    enemySprite.setTextureRect(sf::IntRect(0, 0, frameSize, frameSize));
-    enemySprite.setPosition(x, y);
-    enemySprite.setScale(100.0f / frameSize, 100.0f / frameSize);
-    
-    // Flash red in frenzy mode
+    // Body
+    sf::Sprite bodySprite;
+    const sf::Texture* bodyTex = (phase >= 2) ? &Assets::gamakichi_t : &Assets::gamakichi_t;
+    // Use second sprite in phase 3 if available
+    bodySprite.setTexture(*bodyTex);
+    sf::Vector2u sz = bodyTex->getSize();
+    float scale = 100.0f / (float)sz.y;
+    bodySprite.setScale(right ? scale : -scale, scale);
+    bodySprite.setPosition(right ? x : x + 100.0f, y);
     if (phase == 3) {
-        enemySprite.setColor(sf::Color(255, 100, 100));
+        bodySprite.setColor(sf::Color(255, 100, 100)); // red tint in frenzy
     }
-    
-    window.draw(enemySprite);
+    else if (phase == 2) {
+        bodySprite.setColor(sf::Color(255, 200, 100)); // orange tint
+    }
+    else {
+        bodySprite.setColor(sf::Color::White);
+    }
+    window.draw(bodySprite);
+
+    // Left arm
+    sf::Sprite leftArm;
+    leftArm.setTexture(Assets::gamakichi_arms[0]);
+    sf::Vector2u la = Assets::gamakichi_arms[0].getSize();
+    leftArm.setScale(50.0f / la.x, 50.0f / la.y);
+    leftArm.setPosition(x - 40.0f, y + 20.0f);
+    window.draw(leftArm);
+
+    // Right arm
+    sf::Sprite rightArm;
+    rightArm.setTexture(Assets::gamakichi_arms[1]);
+    sf::Vector2u ra = Assets::gamakichi_arms[1].getSize();
+    rightArm.setScale(50.0f / ra.x, 50.0f / ra.y);
+    rightArm.setPosition(x + 90.0f, y + 20.0f);
+    window.draw(rightArm);
+
+    // Snow overlay if encased
+    drawSnowOverlay(window, 100.0f, 100.0f);
 }
+
 void Gamakichi::hit() {
-     hp--;
-     //Phase thresholds
-     if (hp <= 20 && phase == 1) {
-          phase = 2;
-          attackDuration = 1.0f; //Attacks 2x as fast
-     }
-     else if (hp <= 10 && phase == 2) {
-         phase = 3;
-         attackDuration = 0.5f; //Attacks 4x as fast
-     }
-     if (hp <= 0)
-        isdefeated = true;
+    hp--;
+    if (hp <= 0) {
+        is_defeated = true;
+        hp = 0;
+    }
 }
+
 void Gamakichi::phaseChange() {}
-void Gamakichi::fireArtillery() {
-    //projectile spawn
-    hasProjectileRequest = true;
+
+void Gamakichi::fireArtillery(float xOffset) {
+    projectile = true;
     projectileType = "Artillery";
-    pX = x + 50.0f; //center
-    pY = y;
-    //Fires randomly either left or right arc
-    pVy = -400.0f; //shoots up
-    pVx = (rand() % 2 == 0) ? 200.0f : -200.0f;
+    px = x + 50.0f;
+    py = y + 10.0f;
+    pvy = -480.0f;
+    pvx = xOffset; // main.cpp will add player-aimed velocity on top for center shot
 }
+
+float Gamakichi::get_attack_timer() const { return attackTimer; }
+float Gamakichi::get_attack_duration() const { return attackDuration; }
+int Gamakichi::get_projectile_count() const { return projectileCount; }
+bool Gamakichi::get_arm_active() const { return armActive; }
+void Gamakichi::set_attack_timer(float t) { attackTimer = t; }
+void Gamakichi::set_attack_duration(float d) { attackDuration = d; }
+void Gamakichi::set_projectile_count(int c) { projectileCount = c; }
+void Gamakichi::set_arm_active(bool a) { armActive = a; }

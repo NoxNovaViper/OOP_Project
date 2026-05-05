@@ -1,4 +1,5 @@
 #include "Snowball.h"
+#include "AssetLoader.h"
 Snowball::Snowball(float startX, float startY, float dirX) {
     x = startX;
     y = startY;
@@ -11,6 +12,8 @@ Snowball::Snowball(float startX, float startY, float dirX) {
     distanceCovered = 0.0f;
     range = 400.0f;
     lifetime = 0.0f;
+    anim_timer = 0.0f;
+    anim_frame = 0;
 }
 
 void Snowball::update(float Time) {
@@ -48,12 +51,25 @@ void Snowball::update(float Time) {
     if (y > 600.0f) {
         isactive = false;
     }
+    // animation update
+    anim_timer += Time;
+    if (anim_timer >= 0.1f) {
+        anim_timer = 0.0f;
+        anim_frame = (anim_frame + 1) % 4;
+    }
 }
 void Snowball::draw(RenderWindow& w) {
-    ball.setRadius(16);
-    ball.setPosition(x, y);
-    ball.setFillColor(Color::Cyan);
-    w.draw(ball);
+    Sprite s;
+    if (isRolling) {
+        s.setTexture(Assets::snow_roll[anim_frame]);
+    } else {
+        s.setTexture(Assets::snow_attack_t);
+        // Standardize snowball size
+        s.setScale(32.0f / s.getLocalBounds().width, 32.0f / s.getLocalBounds().height);
+    }
+    s.setOrigin(s.getLocalBounds().width / 2.0f, s.getLocalBounds().height / 2.0f);
+    s.setPosition(x, y);
+    w.draw(s);
 }
 
 void Snowball::startRolling() {

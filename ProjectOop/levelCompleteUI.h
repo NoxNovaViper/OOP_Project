@@ -7,23 +7,23 @@ class LevelCompleteScreen {
 private:
     Font font;
     RectangleShape background;
-    Text titleText;
-    Text scoreText;
-    Text gemsText;
+    Text title_text;
+    Text score_text;
+    Text gems_text;
 
-    RectangleShape nextBtn;
-    Text nextBtnText;
+    RectangleShape next_btn;
+    Text next_btn_text;
 
     int choice;
-    Texture bgTx;
-    Sprite  bgSp;
+    Texture bg_tx;
+    Sprite  bg_sp;
 
 public:
     LevelCompleteScreen();
-    void setup();
-    void setData(int score, int gems);
-    void handleInput(Event& event, RenderWindow& window);
+    void set_up();
+    void set_data(int score, int gems);
+    void handle_input(Event& event, RenderWindow& window);
     void draw(RenderWindow& window);
 
-    int getChoice() { return choice; }
+    int get_choice() { return choice; }
 };

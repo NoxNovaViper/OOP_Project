@@ -24,6 +24,8 @@ private:
     bool distanceincreaseActive;
     bool balloonmodeActive;
     bool addlives;
+    float pushAnimTimer;
+    float throwAnimTimer;
 
 public:
     string name;
@@ -65,6 +67,8 @@ public:
     bool get_snowballpowerActive();
     bool get_distanceincreaseActive();
     bool get_balloonmodeActive();
+    float get_pushAnimTimer();
+    float get_throwAnimTimer();
 
 
 	//setters for player attributes
@@ -96,6 +100,8 @@ public:
     void set_snowballpowerActive(bool s);
     void set_distanceincreaseActive(bool s);
     void set_balloonmodeActive(bool s);
+    void set_pushAnimTimer(float t);
+    void set_throwAnimTimer(float t);
 
     Player(float startX, float startY, int playerNum, int charactype);
     void update(float deltaTime);
@@ -113,7 +119,9 @@ public:
     void activateBalloonmode();
     void addLives();
   
-
+    void setHP(int a) {
+        lives = a;
+    }
     int getLives() const {
         return lives;
     }

@@ -6,18 +6,18 @@
 using namespace std;
 using namespace sf;
 struct platform {
-	float x;//position of the shape via top left corner
-	float y;//y position 
-	float w;//width
-	float h;//height
-	FloatRect collison;
+	float x = 0;//position of the shape via top left corner
+	float y = 0;//y position 
+	float w = 0;//width
+	float h = 0;//height
+	FloatRect collison = FloatRect(0, 0, 0, 0);
 };
 struct enemy_spawn {
-	string type;//Enemy name
-	float x;//enemy x pos
-	float y;//enemy y pos
+	string type = "";//Enemy name
+	float x = 0;//enemy x pos
+	float y = 0;//enemy y pos
 };
-struct state{
+struct state {
 	bool start_screen;
 	bool login;
 	bool character_select;
@@ -31,6 +31,9 @@ struct state{
 	bool debug;
 	bool next_level;
 	bool main_menu;
+	bool shop;
+	bool login2;
+	bool leaderboard;
 };
 struct level {
 	int num_platforms;
@@ -55,16 +58,18 @@ public:
 	Level_Maker();
 	~Level_Maker();
 	level* get_level();
-	
+
 };
 class Level_Manager {
 	Level_Maker levels;
 	string* level_data;
 	state s;
 	int total_levels;
+	int curr_lev;
 public:
 	Level_Manager();
 	void next_level();
+	void set_lev(int l);
 	~Level_Manager();
 	level* get_current_level();
 	void set_start_screen(bool start_screen);
@@ -80,6 +85,9 @@ public:
 	void set_lose(bool lose);
 	void set_next_level(bool next_level);
 	void set_main_menu(bool m);
+	void set_shop(bool s);
+	void set_leaderboard(bool l);
+	bool get_shop();
 	bool get_start_screen();
 	bool get_login();
 	bool get_character_select();
@@ -93,4 +101,7 @@ public:
 	bool get_lose();
 	bool get_next_level();
 	bool get_main_menu();
+	bool get_leaderboard();
+	void set_login2(bool v);
+	bool get_login2();
 };

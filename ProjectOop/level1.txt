@@ -4,7 +4,7 @@
 500 300 200 20
 200 200 400 20
 4
-Botom 100 100
-Botom 300 100
-Botom 500 100
-Botom 700 100
+Botom 150 350
+Botom 600 250
+Botom 300 150
+Botom 700 500

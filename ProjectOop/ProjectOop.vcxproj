@@ -149,6 +149,7 @@
     <ClCompile Include="characterChoiceUI.cpp" />
     <ClCompile Include="GameOverUI.cpp" />
     <ClCompile Include="HUD.cpp" />
+    <ClCompile Include="LeaderboardUI.cpp" />
     <ClCompile Include="levelCompleteUI.cpp" />
     <ClCompile Include="loginScreen.cpp" />
     <ClCompile Include="mainmenu.cpp" />
@@ -172,6 +173,7 @@
     <ClCompile Include="Mogera.cpp" />
     <ClCompile Include="Physics.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="shop.cpp" />
     <ClCompile Include="Snowball.cpp" />
     <ClCompile Include="Tornado.cpp" />
   </ItemGroup>
@@ -181,6 +183,7 @@
     <ClInclude Include="characterChoiceUI.h" />
     <ClInclude Include="GameOverUI.h" />
     <ClInclude Include="HUD.h" />
+    <ClInclude Include="LeaderboardUI.h" />
     <ClInclude Include="levelCompleteUI.h" />
     <ClInclude Include="loginScreen.h" />
     <ClInclude Include="mainmenu.h" />
@@ -205,7 +208,9 @@
     <ClInclude Include="Physics.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Projectile.h" />
+    <ClInclude Include="shop.h" />
     <ClInclude Include="Snowball.h" />
+    <ClInclude Include="spawnables.h" />
     <ClInclude Include="Tornado.h" />
   </ItemGroup>
   <ItemGroup>
@@ -228,6 +233,10 @@
     <Image Include="..\..\..\..\Downloads\SnowBrosAssets\SnowBrosAssets\Images\Botom_Orange.png" />
     <Image Include="..\..\..\..\Downloads\SnowBrosAssets\SnowBrosAssets\Images\Botom_Pink.png" />
     <Image Include="..\..\..\..\Downloads\SnowBrosAssets\SnowBrosAssets\Images\FlyingFoogaFoog_Blue.png" />
+    <Image Include="SnowBrosAssets\Images\FlyingFoogaFoog_Blue_01.png" />
+    <Image Include="SnowBrosAssets\Images\FlyingFoogaFoog_Blue_02.png" />
+    <Image Include="SnowBrosAssets\Images\FlyingFoogaFoog_Blue_03.png" />
+    <Image Include="SnowBrosAssets\Images\FlyingFoogaFoog_Blue_04.png" />
     <Image Include="..\..\..\..\Downloads\SnowBrosAssets\SnowBrosAssets\Images\FlyingFoogaFoog_Orange.png" />
     <Image Include="..\..\..\..\Downloads\SnowBrosAssets\SnowBrosAssets\Images\FlyingFoogaFoog_Red.png" />
     <Image Include="..\..\..\..\Downloads\SnowBrosAssets\SnowBrosAssets\Images\Gamakichi.png" />
@@ -239,7 +248,13 @@
     <Image Include="..\..\..\..\Downloads\SnowBrosAssets\SnowBrosAssets\Images\Player_Red.png" />
     <Image Include="..\..\..\..\Downloads\SnowBrosAssets\SnowBrosAssets\Images\Player_Yellow.png" />
     <Image Include="..\..\..\..\Downloads\SnowBrosAssets\SnowBrosAssets\Images\Tornado_Blue.png" />
+    <Image Include="SnowBrosAssets\Images\Tornado_Blue_01.png" />
+    <Image Include="SnowBrosAssets\Images\Tornado_Blue_02.png" />
+    <Image Include="SnowBrosAssets\Images\Tornado_Blue_03.png" />
+    <Image Include="SnowBrosAssets\Images\Tornado_Blue_04.png" />
     <Image Include="..\..\..\..\Downloads\SnowBrosAssets\SnowBrosAssets\Images\Tornado_Red.png" />
+    <Image Include="SnowBrosAssets\Images\Knife_Tornado_Blue.png" />
+    <Image Include="SnowBrosAssets\Images\Snow_Attack_Nick.png" />
     <Image Include="SnowBrosAssets\Level10\bg.png" />
     <Image Include="SnowBrosAssets\Level10\tile.png" />
     <Image Include="SnowBrosAssets\Level1\bg.png" />
@@ -277,6 +292,14 @@
     <Image Include="SnowBrosAssets\Nick_sprites\walk_02.png" />
     <Image Include="SnowBrosAssets\Nick_sprites\walk_03.png" />
     <Image Include="SnowBrosAssets\Nick_sprites\walk_04.png" />
+    <Image Include="SnowBrosAssets\Nick_sprites\death_01.png" />
+    <Image Include="SnowBrosAssets\Nick_sprites\death_02.png" />
+    <Image Include="SnowBrosAssets\Nick_sprites\death_03.png" />
+    <Image Include="SnowBrosAssets\Nick_sprites\death_04.png" />
+    <Image Include="SnowBrosAssets\Nick_sprites\push_01.png" />
+    <Image Include="SnowBrosAssets\Nick_sprites\push_02.png" />
+    <Image Include="SnowBrosAssets\Nick_sprites\push_03.png" />
+    <Image Include="SnowBrosAssets\Nick_sprites\push_04.png" />
     <Image Include="SnowBrosAssets\start1.png" />
     <Image Include="SnowBrosAssets\start2.png" />
   </ItemGroup>

@@ -1,125 +1,125 @@
-#include "Mainmenu.h"
+#include "mainmenu.h"
 #include<iostream>
 using namespace std;
 
 Mainmenu::Mainmenu() {
     choice = 0;
-    showModeSelect = false;
-    modeSelected = false;
-    isSinglePlayer = true;
+    show_mode_select = false;
+    mode_selected = false;
+    is_single_player = true;
 }
 
-void Mainmenu::setup() {
+void Mainmenu::set_up() {
     font.loadFromFile("SnowBrosAssets/Fonts/Starborn.ttf");
 
-    
+
     // background 
-    if (!bgTx.loadFromFile("SnowBrosAssets/Start/menubg.png")) {
+    if (!bg_tx.loadFromFile("SnowBrosAssets/Start/menubg.png")) {
         cout << "Background image not loaded!\n";
     }
-    bgSp.setTexture(bgTx);
-    bgSp.setScale(
-        800.0f / bgTx.getSize().x,
-        600.0f / bgTx.getSize().y
+    bg_sp.setTexture(bg_tx);
+    bg_sp.setScale(
+        800.0f / bg_tx.getSize().x,
+        600.0f / bg_tx.getSize().y
     );
 
-                //game title
-    titleText.setFont(font);
-    titleText.setString("Snow Bros");
-    titleText.setCharacterSize(60);
-    titleText.setFillColor(Color::White);
-    titleText.setPosition(270, 60);
+    //game title
+    title_text.setFont(font);
+    title_text.setString("Snow Bros");
+    title_text.setCharacterSize(60);
+    title_text.setFillColor(Color::White);
+    title_text.setPosition(270, 60);
 
-                //newGame button
-    newGameBtn.setSize(Vector2f(300, 55));
-    newGameBtn.setFillColor(Color(0, 150, 200));
-    newGameBtn.setPosition(250, 180);
-    newGameText.setFont(font);
-    newGameText.setString("New Game");
-    newGameText.setCharacterSize(24);
-    newGameText.setFillColor(Color::White);
-    newGameText.setPosition(320, 192);
-                            //contiune button
-    continueBtn.setSize(Vector2f(300, 55));
-    continueBtn.setFillColor(Color(0, 150, 200));
-    continueBtn.setPosition(250, 260);
-    continueText.setFont(font);
-    continueText.setString("Continue");
-    continueText.setCharacterSize(24);
-    continueText.setFillColor(Color::White);
-    continueText.setPosition(330, 272);
-                    //leaderboard button
-    leaderboardBtn.setSize(Vector2f(300, 55));
-    leaderboardBtn.setFillColor(Color(0, 150, 200));
-    leaderboardBtn.setPosition(250, 340);
-    leaderboardText.setFont(font);
-    leaderboardText.setString("Leaderboard");
-    leaderboardText.setCharacterSize(24);
-    leaderboardText.setFillColor(Color::White);
-    leaderboardText.setPosition(300, 352);
+    //new_game_btn button
+    new_game_btn.setSize(Vector2f(300, 55));
+    new_game_btn.setFillColor(Color(0, 150, 200));
+    new_game_btn.setPosition(250, 180);
+    new_game_text.setFont(font);
+    new_game_text.setString("New Game");
+    new_game_text.setCharacterSize(24);
+    new_game_text.setFillColor(Color::White);
+    new_game_text.setPosition(320, 192);
+    //continue_btn button
+    continue_btn.setSize(Vector2f(300, 55));
+    continue_btn.setFillColor(Color(0, 150, 200));
+    continue_btn.setPosition(250, 260);
+    continue_text.setFont(font);
+    continue_text.setString("Continue");
+    continue_text.setCharacterSize(24);
+    continue_text.setFillColor(Color::White);
+    continue_text.setPosition(330, 272);
+    //leaderboard_btn button
+    leaderboard_btn.setSize(Vector2f(300, 55));
+    leaderboard_btn.setFillColor(Color(0, 150, 200));
+    leaderboard_btn.setPosition(250, 340);
+    leaderboard_text.setFont(font);
+    leaderboard_text.setString("Leaderboard");
+    leaderboard_text.setCharacterSize(24);
+    leaderboard_text.setFillColor(Color::White);
+    leaderboard_text.setPosition(300, 352);
 
-    exitBtn.setSize(Vector2f(300, 55));
-    exitBtn.setFillColor(Color(0, 150, 200));
-    exitBtn.setPosition(250, 420);
-    exitText.setFont(font);
-    exitText.setString("Exit");
-    exitText.setCharacterSize(24);
-    exitText.setFillColor(Color::White);
-    exitText.setPosition(370, 432);
+    exit_btn.setSize(Vector2f(300, 55));
+    exit_btn.setFillColor(Color(0, 150, 200));
+    exit_btn.setPosition(250, 420);
+    exit_text.setFont(font);
+    exit_text.setString("Exit");
+    exit_text.setCharacterSize(24);
+    exit_text.setFillColor(Color::White);
+    exit_text.setPosition(370, 432);
 
-    // MUTILPLAYER OPTION
+    // MULTILPLAYER OPTION
 
-    modeTitle.setFont(font);
-    modeTitle.setString("Select Mode");
-    modeTitle.setCharacterSize(40);
-    modeTitle.setFillColor(Color::White);
-    modeTitle.setPosition(290, 150);
+    mode_title.setFont(font);
+    mode_title.setString("Select Mode");
+    mode_title.setCharacterSize(40);
+    mode_title.setFillColor(Color::White);
+    mode_title.setPosition(290, 150);
 
-    singleBtn.setSize(Vector2f(300, 55));
-    singleBtn.setFillColor(Color(0, 180, 100));
-    singleBtn.setPosition(250, 280);
-    singleText.setFont(font);
-    singleText.setString("Single Player");
-    singleText.setCharacterSize(24);
-    singleText.setFillColor(Color::White);
-    singleText.setPosition(290, 292);
+    single_btn.setSize(Vector2f(300, 55));
+    single_btn.setFillColor(Color(0, 180, 100));
+    single_btn.setPosition(250, 280);
+    single_text.setFont(font);
+    single_text.setString("Single Player");
+    single_text.setCharacterSize(24);
+    single_text.setFillColor(Color::White);
+    single_text.setPosition(290, 292);
 
-    multiBtn.setSize(Vector2f(300, 55));
-    multiBtn.setFillColor(Color(0, 180, 100));
-    multiBtn.setPosition(250, 360);
-    multiText.setFont(font);
-    multiText.setString("Two Players");
-    multiText.setCharacterSize(24);
-    multiText.setFillColor(Color::White);
-    multiText.setPosition(310, 372);
+    multi_btn.setSize(Vector2f(300, 55));
+    multi_btn.setFillColor(Color(0, 180, 100));
+    multi_btn.setPosition(250, 360);
+    multi_text.setFont(font);
+    multi_text.setString("Two Players");
+    multi_text.setCharacterSize(24);
+    multi_text.setFillColor(Color::White);
+    multi_text.setPosition(310, 372);
 }
 
-void Mainmenu::handleInput(Event& event, RenderWindow& window) {
+void Mainmenu::handle_input(Event& event, RenderWindow& window) {
     if (event.type == Event::MouseButtonPressed) {
-        Vector2f mousePos = window.mapPixelToCoords(
+        Vector2f mouse_pos = window.mapPixelToCoords(
             Vector2i(event.mouseButton.x, event.mouseButton.y)
         );
-        if (!showModeSelect) {
+        if (!show_mode_select) {
             // mose clicks on screen logic
-            if (newGameBtn.getGlobalBounds().contains(mousePos))
-                showModeSelect = true;
-            else if (continueBtn.getGlobalBounds().contains(mousePos))
+            if (new_game_btn.getGlobalBounds().contains(mouse_pos))
+                show_mode_select = true;
+            else if (continue_btn.getGlobalBounds().contains(mouse_pos))
                 choice = 2;
-            else if (leaderboardBtn.getGlobalBounds().contains(mousePos))
+            else if (leaderboard_btn.getGlobalBounds().contains(mouse_pos))
                 choice = 3;
-            else if (exitBtn.getGlobalBounds().contains(mousePos))
+            else if (exit_btn.getGlobalBounds().contains(mouse_pos))
                 choice = 4;
         }
         else {
-            
-            if (singleBtn.getGlobalBounds().contains(mousePos)) {
-                isSinglePlayer = true;
-                modeSelected = true;
+
+            if (single_btn.getGlobalBounds().contains(mouse_pos)) {
+                is_single_player = true;
+                mode_selected = true;
                 choice = 1;
             }
-            else if (multiBtn.getGlobalBounds().contains(mousePos)) {
-                isSinglePlayer = false;
-                modeSelected = true;
+            else if (multi_btn.getGlobalBounds().contains(mouse_pos)) {
+                is_single_player = false;
+                mode_selected = true;
                 choice = 1;
             }
         }
@@ -127,26 +127,26 @@ void Mainmenu::handleInput(Event& event, RenderWindow& window) {
 }
 
 void Mainmenu::draw(RenderWindow& window) {
-    window.draw(bgSp);
-    window.draw(titleText);
+    window.draw(bg_sp);
+    window.draw(title_text);
 
-    if (!showModeSelect) {
+    if (!show_mode_select) {
         // displaying main menu
-        window.draw(newGameBtn);
-        window.draw(newGameText);
-        window.draw(continueBtn);
-        window.draw(continueText);
-        window.draw(leaderboardBtn);
-        window.draw(leaderboardText);
-        window.draw(exitBtn);
-        window.draw(exitText);
+        window.draw(new_game_btn);
+        window.draw(new_game_text);
+        window.draw(continue_btn);
+        window.draw(continue_text);
+        window.draw(leaderboard_btn);
+        window.draw(leaderboard_text);
+        window.draw(exit_btn);
+        window.draw(exit_text);
     }
     else {
         // proceede selected mode 
-        window.draw(modeTitle);
-        window.draw(singleBtn);
-        window.draw(singleText);
-        window.draw(multiBtn);
-        window.draw(multiText);
+        window.draw(mode_title);
+        window.draw(single_btn);
+        window.draw(single_text);
+        window.draw(multi_btn);
+        window.draw(multi_text);
     }
 }

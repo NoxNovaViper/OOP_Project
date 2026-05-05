@@ -5,40 +5,40 @@ using namespace sf;
 
 class PauseMenu {
 private:
-    Texture bgTx;
-    Sprite  bgSp;
+    Texture bg_tx;
+    Sprite  bg_sp;
 
     Font font;
     RectangleShape background;
-    Text titleText;
+    Text title_text;
 
-    RectangleShape resumeBtn;
-    Text resumeText;
+    RectangleShape resume_btn;
+    Text resume_text;
 
-    RectangleShape shopBtn;
-    Text shopText;
+    RectangleShape shop_btn;
+    Text shop_text;
 
-    RectangleShape saveBtn;
-    Text saveText;
+    RectangleShape save_btn;
+    Text save_text;
 
-    RectangleShape logoutBtn;
-    Text logoutText;
+    RectangleShape logout_btn;
+    Text logout_text;
 
-    RectangleShape exitBtn;
-    Text exitText;
+    RectangleShape exit_btn;
+    Text exit_text;
 
     int choice;
-    bool isOpen;
+    bool is_open;
 
 public:
     PauseMenu();
-    void setup();
-    void handleInput(Event& event, RenderWindow& window);
+    void set_up();
+    void handle_input(Event& event, RenderWindow& window);
     void draw(RenderWindow& window);
 
-    void open() { isOpen = true; }
-    void close() { isOpen = false; }
-    bool getIsOpen() { return isOpen; }
-    int getChoice() { return choice; }
-    void resetChoice() { choice = 0; }
+    void open() { is_open = true; }
+    void close() { is_open = false; }
+    bool get_is_open() { return is_open; }
+    int get_choice() { return choice; }
+    void reset_choice() { choice = 0; }
 };

@@ -3,6 +3,6 @@ Boss::Boss(float startX, float startY) {
     x = startX;
     y = startY;
     phase = 1;
-    phaseTimer = 0.0f;
-    isdefeated = false;
+    phase_timer = 0.0f;
+    is_defeated = false;
 }

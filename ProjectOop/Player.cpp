@@ -11,6 +11,8 @@ Player::Player(float startX, float startY, int playerNum, int charactype) {
     isalive = true;
     playerNumber = playerNum;
     chaincount = 0;
+    pushAnimTimer = 0.0f;
+    throwAnimTimer = 0.0f;
     speed = 100.0f;
     snowballPower = 1.0f;
     snowballDistance = 600.0f;
@@ -134,6 +136,8 @@ bool Player::get_speedboostActive() { return speedboostActive; }
 bool Player::get_snowballpowerActive() { return snowballpowerActive; }
 bool Player::get_distanceincreaseActive() { return distanceincreaseActive; }
 bool Player::get_balloonmodeActive() { return balloonmodeActive; }
+float Player::get_pushAnimTimer() { return pushAnimTimer; }
+float Player::get_throwAnimTimer() { return throwAnimTimer; }
 
 
 
@@ -166,3 +170,5 @@ void Player::set_speedboostActive(bool s) { speedboostActive = s; }
 void Player::set_snowballpowerActive(bool s) { snowballpowerActive = s; }
 void Player::set_distanceincreaseActive(bool s) { distanceincreaseActive = s; }
 void Player::set_balloonmodeActive(bool s) { balloonmodeActive = s; }
+void Player::set_pushAnimTimer(float t) { pushAnimTimer = t; }
+void Player::set_throwAnimTimer(float t) { throwAnimTimer = t; }

@@ -8,35 +8,38 @@ MogeraChild::MogeraChild(float startX, float startY) {
     hp = 1; 
     speed = 120.0f;
     gemdrop = 5;
+    enemy_type = 1;
     // Pick a random initial direction
     directionX = (rand() % 2 == 0) ? 1.0f : -1.0f;
 }
 
-void MogeraChild::update(float deltaTime) {
+void MogeraChild::update(float Time) {
     if (Rolling) {
-        x += Roll_speed * deltaTime;
-        if (x < 0) x = 800;
-        if (x > 800) x = 0;
+        x += Roll_speed * Time;
+        applyGravity(Time);
+        if ((x <= 0) || (x + getHitbox().width >= 800)) {
+            kill();
+        }
         return;
     }
-    if (update_snow_state(deltaTime)) {
+    if (update_snow_state(Time)) {
         return;
     }
 
     // Moves in one direction until it hits a wall
-    x += directionX * speed * snow_speed_multiplier() * deltaTime;
+    x += directionX * speed * snow_speed_multiplier() * Time;
     
     // Bounce off walls
     if (x <= 0) {
         x = 0;
         directionX = 1.0f;
-    } else if (x >= 752) { // 800 - 48 sprite width
-        x = 752;
+    } else if (x >= 760) {
+        x = 760;
         directionX = -1.0f;
     }
 
     // Use shared gravity from base class
-    applyGravity(deltaTime);
+    applyGravity(Time);
 }
 
 void MogeraChild::draw(sf::RenderWindow& window) {
@@ -46,15 +49,23 @@ void MogeraChild::draw(sf::RenderWindow& window) {
     int frameSize = Assets::botom_t.getSize().y;
     s.setTextureRect(sf::IntRect(0, 0, frameSize, frameSize));
     s.setPosition(x, y);
-    // Smaller sprite
-    s.setScale(20.0f / frameSize, 20.0f / frameSize);
+    // Larger sprite
+    s.setScale(40.0f / frameSize, 40.0f / frameSize);
     
     // Color it differently so the player knows it's a child
     s.setColor(sf::Color(255, 100, 100)); 
     window.draw(s);
-    drawSnowOverlay(window, 20.0f, 20.0f);
+    drawSnowOverlay(window, 40.0f, 40.0f);
 }
 
 void MogeraChild::hit() {
     add_snow(50);
+}
+
+float MogeraChild::get_direction_x() const {
+    return directionX;
+}
+
+void MogeraChild::set_direction_x(float new_direction_x) {
+    directionX = new_direction_x;
 }

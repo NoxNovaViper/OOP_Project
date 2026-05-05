@@ -6,43 +6,43 @@ class CharacterSelect {
 private:
     Font font;
     RectangleShape background;
-    Text titleText;
-    Text instructionText;
-    Texture bgTx;
-    Sprite  bgSp;
+    Text title_text;
+    Text instruction_text;
+    Texture bg_tx;
+    Sprite  bg_sp;
 
     // nick button
-    RectangleShape nickBtn;
-    Text nickText;
-    Text nickStats;
+    RectangleShape nick_btn;
+    Text nick_text;
+    Text nick_stats;
 
     // tom button
-    RectangleShape tomBtn;
-    Text tomText;
-    Text tomStats;
+    RectangleShape tom_btn;
+    Text tom_text;
+    Text tom_stats;
 
     // custom button
-    RectangleShape customBtn;
-    Text customText;
-    Text customStats;
+    RectangleShape custom_btn;
+    Text custom_text;
+    Text custom_stats;
 
     // images
-    Texture nickTex;
-    Texture tomTex;
-    Texture customTex;
-    Sprite nickSprite;
-    Sprite tomSprite;
-    Sprite customSprite;
+    Texture nick_tex;
+    Texture tom_tex;
+    Texture custom_tex;
+    Sprite nick_sprite;
+    Sprite tom_sprite;
+    Sprite custom_sprite;
 
     int choice;
-    bool selectionDone;
+    bool selection_done;
 
 public:
     CharacterSelect();
-    void setup(int playerNumber);  
-    void handleInput(Event& event, RenderWindow& window);
+    void set_up(int player_number);
+    void handle_input(Event& event, RenderWindow& window);
     void draw(RenderWindow& window);
 
-    bool getSelectionDone() { return selectionDone; }
-    int getChoice() { return choice; }
+    bool get_selection_done() { return selection_done; }
+    int get_choice() { return choice; }
 };

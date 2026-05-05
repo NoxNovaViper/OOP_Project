@@ -14,4 +14,10 @@ public:
     void hit() override;
     void knifeThrow();
     void kill() override;
+    float get_knife_timer() const;
+    float get_knife_duration() const;
+    float get_fly_speed_randomly() const;
+    void set_knife_timer(float new_knife_timer);
+    void set_knife_duration(float new_knife_duration);
+    void set_fly_speed_randomly(float new_fly_speed_randomly);
 };

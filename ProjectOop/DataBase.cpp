@@ -54,9 +54,9 @@ int strToInt(const string& str) {
 Database::Database() {}
 
 // to save player progress 
-void Database::saveProgress(const string& username, int level, int lives, int gems, int score) {
+void Database::save_progress(const string& username, int level, int lives, int gems, int score) {
 
-    ifstream file("SnowBrosAssets\Start\progress.txt");
+    ifstream file("SnowBrosAssets/Start/progress.txt");
     string Data = "";
     string line;
     bool found = false;
@@ -86,15 +86,15 @@ void Database::saveProgress(const string& username, int level, int lives, int ge
             intToStr(score) + "\n";
     }
     // writing everything 
-    ofstream writefile("SnowBrosAssets\Start\progress.txt");
+    ofstream writefile("SnowBrosAssets/Start/progress.txt");
     writefile << Data;
     writefile.close();
 }
 // loading player progress from progress file
 // finds player by username and fills their data
-void Database::loadProgress(const string& username, int& level, int& lives,
+void Database::load_progress(const string& username, int& level, int& lives,
     int& gems, int& score) {
-    ifstream readFile("SnowBrosAssets\Start\progress.txt");
+    ifstream readFile("SnowBrosAssets/Start/progress.txt");
     string line;
     while (getline(readFile, line)) {
         stringstream ss(line);
@@ -126,17 +126,47 @@ void Database::loadProgress(const string& username, int& level, int& lives,
 }
 
 // adding new score to leaderboard
-void Database::saveLeaderboard(const string& username, int score, int level) {
-    ofstream writeFile("SnowBrosAssets\Start\leaderboard.txt", ios::app);
-    writeFile << username << "|"
-        << intToStr(score) << "|"
-        << intToStr(level) << "\n";
+void Database::save_leaderboard(const string& username, int score, int level) {
+    ifstream readFile("SnowBrosAssets/Start/leaderboard.txt");
+    string Data = "";
+    string line;
+    bool found = false;
+
+    while (getline(readFile, line)) {
+        stringstream ss(line);
+        string savedUser, savedScoreStr, savedLevelStr;
+        getline(ss, savedUser, '|');
+        getline(ss, savedScoreStr, '|');
+        getline(ss, savedLevelStr, '|');
+
+        if (savedUser == username) {
+            found = true;
+            int savedScore = strToInt(savedScoreStr);
+            if (score > savedScore) {
+                Data += username + "|" + intToStr(score) + "|" + intToStr(level) + "\n";
+            } else {
+                Data += line + "\n";
+            }
+        } else {
+            if (!line.empty()) {
+                Data += line + "\n";
+            }
+        }
+    }
+    readFile.close();
+
+    if (!found) {
+        Data += username + "|" + intToStr(score) + "|" + intToStr(level) + "\n";
+    }
+
+    ofstream writeFile("SnowBrosAssets/Start/leaderboard.txt");
+    writeFile << Data;
     writeFile.close();
 }
 
 
-void Database::displayLeaderboard() {
-    ifstream readFile("SnowBrosAssets\Start\leaderboard.txt");
+void Database::display_leaderboard() {
+    ifstream readFile("SnowBrosAssets/Start/leaderboard.txt");
     // store all entries
     string usernames[100];
     int scores[100];
@@ -178,7 +208,34 @@ void Database::displayLeaderboard() {
         }
     }
     cout << "\n    ||||  LEADERBOARD TOP 10  ||||" << endl;
-    for (int i = 0;i < 10;i++) {
-        cout << i << ". " << usernames << " | Score: " << scores << " | Level: " << levels << endl;
+    for (int i = 0; i < (count < 10 ? count : 10); i++) {
+        cout << i + 1 << ". " << usernames[i] << " | Score: " << scores[i] << " | Level: " << levels[i] << endl;
+    }
+}
+void Database::load_leaderboard(string usernames[], int scores[], int levels[], int& count) {
+    ifstream readFile("SnowBrosAssets\\Start\\leaderboard.txt");
+    count = 0;
+    string line;
+    while (getline(readFile, line) && count < 100) {
+        stringstream ss(line);
+        string username, score, level;
+        getline(ss, username, '|');
+        getline(ss, score, '|');
+        getline(ss, level, '|');
+        usernames[count] = username;
+        scores[count] = strToInt(score);
+        levels[count] = strToInt(level);
+        count++;
+    }
+    readFile.close();
+    // sort
+    for (int i = 0; i < count - 1; i++) {
+        for (int j = 0; j < count - i - 1; j++) {
+            if (scores[j] < scores[j + 1]) {
+                swap(scores[j], scores[j + 1]);
+                swap(levels[j], levels[j + 1]);
+                swap(usernames[j], usernames[j + 1]);
+            }
+        }
     }
 }

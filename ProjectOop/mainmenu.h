@@ -6,39 +6,44 @@ using namespace std;
 class Mainmenu {
 private:
     int choice;
-    Texture bgTx;
-    Sprite bgSp;
+    Texture bg_tx;
+    Sprite bg_sp;
     Font font;
     RectangleShape background;
-    Text titleText;
+    Text title_text;
 
     // main buttons
-    RectangleShape newGameBtn;
-    Text newGameText;
-    RectangleShape continueBtn;
-    Text continueText;
-    RectangleShape leaderboardBtn;
-    Text leaderboardText;
-    RectangleShape exitBtn;
-    Text exitText;
+    RectangleShape new_game_btn;
+    Text new_game_text;
+    RectangleShape continue_btn;
+    Text continue_text;
+    RectangleShape leaderboard_btn;
+    Text leaderboard_text;
+    RectangleShape exit_btn;
+    Text exit_text;
 
-    // mode select buttons — added
-    bool showModeSelect;
-    bool modeSelected;
-    bool isSinglePlayer;
-    Text modeTitle;
-    RectangleShape singleBtn;
-    Text singleText;
-    RectangleShape multiBtn;
-    Text multiText;
+    // mode select buttons
+    bool show_mode_select;
+    bool mode_selected;
+    bool is_single_player;
+    Text mode_title;
+    RectangleShape single_btn;
+    Text single_text;
+    RectangleShape multi_btn;
+    Text multi_text;
 
 public:
     Mainmenu();
-    void setup();
-    void handleInput(sf::Event& event, sf::RenderWindow& window);
-    void draw(sf::RenderWindow& window);
-
-    int getChoice() { return choice; }
-    bool getModeSelected() { return modeSelected; }
-    bool getIsSinglePlayer() { return isSinglePlayer; }
+    void set_up();
+    void handle_input(Event& event, RenderWindow& window);
+    void draw(RenderWindow& window);
+    void reset_choice()
+    {
+        choice = 0;
+        show_mode_select = false;
+        mode_selected = false;
+    }
+    int get_choice() { return choice; }
+    bool get_mode_selected() { return mode_selected; }
+    bool get_is_single_player() { return is_single_player; }
 };
